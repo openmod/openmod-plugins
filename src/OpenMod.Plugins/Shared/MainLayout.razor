@@ -1,11 +1,11 @@
 ﻿@inherits LayoutComponentBase
 
-<MudThemeProvider/>
+<MudThemeProvider Theme="@_currentTheme"/>
 <MudDialogProvider/>
 <MudSnackbarProvider/>
 
 <MudLayout>
-    <NavBar/>
+    <NavBar OnThemeRotateRequest="@(() => RotateTheme())"/>
 
     <MudMainContent>
         <MudContainer>
@@ -13,7 +13,7 @@
             @code {
 #if DEBUG
                 bool _isDebug = true;
-#else 
+#else
                 bool _isDebug = false;
 #endif
             }

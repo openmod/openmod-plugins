@@ -15,16 +15,20 @@
                            Class="search-bar"/>
         </MudItem>
         <MudAppBarSpacer/>
-        @* todo: add theme toggler
         <MudTooltip Text="Toggle light/dark theme">
-            <MudIconButton Icon="@Icons.Material.Filled.Brightness4" Color="Color.Inherit" OnClick="@((e) => ToggleTheme())"/>
+            <MudIconButton Icon="@Icons.Material.Filled.Brightness4" Color="Color.Inherit" OnClick="@OnThemeRotateRequest"/>
         </MudTooltip>
-        *@
-        @* todo: put github link *@
+        <MudDivider Vertical="true" FlexItem="true" DividerType="DividerType.Middle" Class="mx-4 my-5"/>
+        @* todo: put github link, add tooltip *@
         <MudIconButton Icon="@Icons.Custom.Brands.GitHub" Color="Color.Inherit"/>
     </MudAppBar>
 </div>
 
 @code {
+
+    [Parameter]
+    public EventCallback OnThemeRotateRequest { get; set; }
+
     public string SearchValue { get; set; } = string.Empty;
+
 }
