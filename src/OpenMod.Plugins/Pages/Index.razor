@@ -1,0 +1,36 @@
+﻿@page "/"
+
+@if (_plugins.Length == 1)
+{
+    <MudText Typo="Typo.h4">There are @_plugins.Length plugin</MudText>
+}
+else
+{
+    <MudText Typo="Typo.h4">There are @_plugins.Length plugins</MudText>
+}
+
+<br>
+<br>
+
+<MudGrid>
+    @foreach (var plugin in _plugins)
+    {
+        <PluginCard Data="@plugin"/>
+    }
+</MudGrid>
+
+@code {
+
+    // todo: load from nuget 
+    private PluginCardData[] _plugins =
+    {
+    // for testing
+        new(Id: "OpenMod.Example",
+            Summary: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ante in nibh mauris cursus mattis molestie. Nulla facilisi morbi tempus iaculis urna id. Ut placerat orci nulla pellentesque dignissim enim sit amet venenatis.",
+            Owners: new[] {"OpenMod"}),
+        new(Id: "Kr4ken.NewEssentials",
+            Summary: "The Essential plugin for Unturned, built on OpenMod",
+            Owners: new[] {"alehmann"}),
+    };
+
+}

@@ -1,0 +1,62 @@
+﻿@using Microsoft.Extensions.Logging
+
+@inject ILogger<PluginCard> Logger
+@inject ISnackbar Snackbar
+@inject IJSRuntime JsRuntime
+
+<MudItem xs="12" md="12">
+    <MudCard>
+        <MudCardHeader>
+            <CardHeaderContent>
+                <MudText Typo="Typo.h5">
+                    @Data.Id
+                    @if (Data.IsOfficial)
+                    {
+                        <MudTooltip Text="This plugin is created by OpenMod" Placement="Placement.Top">
+                            <MudIcon Icon="@Icons.Material.Filled.CheckCircle"
+                                     Color="Color.Primary"
+                                     Size="Size.Small"
+                                     Style="margin-left: 10px;"/>
+                        </MudTooltip>
+                    }
+                    <MudText Typo="Typo.subtitle1" Style="display: inline; margin-left: 10px;">
+                        by: @string.Join(", ", Data.Owners)
+                    </MudText>
+                </MudText>
+            </CardHeaderContent>
+            <CardHeaderActions>
+                <MudTooltip Text="Copy install command" Placement="Placement.Top">
+                    <MudIconButton Icon="@Icons.Material.Filled.ContentCopy"
+                                   Color="Color.Default"
+                                   @onclick="@CopyToClipboardAsync"/>
+                </MudTooltip>
+            </CardHeaderActions>
+        </MudCardHeader>
+        <MudCardContent>
+            <MudText Typo="Typo.body1">@Data.Summary</MudText>
+        </MudCardContent>
+    </MudCard>
+</MudItem>
+
+@code {
+
+    [Parameter]
+    public PluginCardData Data { get; set; } = null!;
+
+    // todo: refactor to a separate component?
+    private async Task CopyToClipboardAsync()
+    {
+    // Writing to the clipboard may be denied, so we must handle the exception
+        try
+        {
+            await JsRuntime.InvokeVoidAsync("navigator.clipboard.writeText", Data.CommandInstall);
+            Snackbar.Add("Command copied!", Severity.Success);
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Failed to copy to clipboard");
+            Snackbar.Add("Failed to copy!", Severity.Error);
+        }
+    }
+
+}

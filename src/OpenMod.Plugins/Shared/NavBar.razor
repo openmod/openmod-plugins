@@ -1,0 +1,30 @@
+﻿<div>
+    <MudAppBar Color="Color.Primary" Fixed="false">
+        <MudHidden Breakpoint="Breakpoint.SmAndUp" Invert="true">
+            <MudText Typo="Typo.h5" Class="brand-text">OpenMod Plugins</MudText>
+        </MudHidden>
+        <MudAppBarSpacer/>
+        <MudItem xs="12" sm="6" md="4">
+            @* todo: make search working *@
+            <MudTextField @bind-Value="@SearchValue"
+                           Placeholder="Search"
+                           Variant="Variant.Outlined"
+                           Adornment="Adornment.End"
+                           AdornmentIcon="@Icons.Filled.Search"
+                           DisableUnderLine="true"
+                           Class="search-bar"/>
+        </MudItem>
+        <MudAppBarSpacer/>
+        @* todo: add theme toggler
+        <MudTooltip Text="Toggle light/dark theme">
+            <MudIconButton Icon="@Icons.Material.Filled.Brightness4" Color="Color.Inherit" OnClick="@((e) => ToggleTheme())"/>
+        </MudTooltip>
+        *@
+        @* todo: put github link *@
+        <MudIconButton Icon="@Icons.Custom.Brands.GitHub" Color="Color.Inherit"/>
+    </MudAppBar>
+</div>
+
+@code {
+    public string SearchValue { get; set; } = string.Empty;
+}

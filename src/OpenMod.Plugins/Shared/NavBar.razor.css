@@ -1,0 +1,26 @@
+﻿::deep div .brand-text {
+    letter-spacing: .2rem;
+    font-weight: 300;
+    font-size: 24px;
+    user-select: none;
+}
+
+::deep .search-bar.mud-input-control {
+    margin-bottom: 5px;
+    border-radius: var(--mud-default-borderradius);
+    background-color: var(--mud-palette-primary-lighten);
+}
+
+::deep .search-bar.mud-input-control .mud-input {
+    height: 42px;
+}
+
+::deep .search-bar .mud-input.mud-input-outlined .mud-input-outlined-border {
+    border: none;
+    border-radius: var(--mud-default-borderradius);
+}
+
+::deep .search-bar.mud-input-control .mud-input-root,
+::deep .search-bar.mud-input-control .mud-icon-default {
+    color: #fafafa;
+}
