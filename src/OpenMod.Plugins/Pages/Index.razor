@@ -8,12 +8,9 @@
 }
 else
 {
-    // todo: use SmartFormat.NET for this
-    string _pluginsCountHeader = _plugins.Count == 1
-        ? $"There are {_plugins.Count} plugin"
-        : $"There are {_plugins.Count} plugins";
-
-    <MudText Typo="Typo.h4">@_pluginsCountHeader</MudText>
+    <MudText Typo="Typo.h4">
+        @Smart.Format("There {0:plural:is 1 plugin|are {} plugins}", _plugins.Count)
+    </MudText>
 
     <br>
     <br>

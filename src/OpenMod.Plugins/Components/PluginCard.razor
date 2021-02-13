@@ -20,7 +20,7 @@
                         </MudTooltip>
                     }
                     <MudText Typo="Typo.subtitle1" Style="display: inline; margin-left: 10px;">
-                        by: @string.Join(", ", Data.Authors)
+                        by: @Smart.Format("{0:list:{}|, | and }", new object[] {Data.Authors})
                     </MudText>
                 </MudText>
             </CardHeaderContent>
