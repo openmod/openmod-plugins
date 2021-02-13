@@ -14,7 +14,7 @@
                     {
                         <MudTooltip Text="This plugin is created by OpenMod" Placement="Placement.Top">
                             <MudIcon Icon="@Icons.Material.Filled.CheckCircle"
-                                     Color="Color.Primary"
+                                     Color="Color.Info"
                                      Size="Size.Small"
                                      Style="margin-left: 10px;"/>
                         </MudTooltip>
@@ -26,9 +26,7 @@
             </CardHeaderContent>
             <CardHeaderActions>
                 <MudTooltip Text="Copy install command" Placement="Placement.Top">
-                    <MudIconButton Icon="@Icons.Material.Filled.ContentCopy"
-                                   Color="Color.Default"
-                                   @onclick="@CopyToClipboardAsync"/>
+                    <MudIconButton Icon="@Icons.Material.Filled.ContentCopy" @onclick="@CopyToClipboardAsync"/>
                 </MudTooltip>
             </CardHeaderActions>
         </MudCardHeader>
