@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using BaGet.Protocol.Models;
 
@@ -16,7 +17,8 @@ namespace OpenMod.Plugins.Data
         {
         }
 
-        public bool IsOfficial => Authors.Any(x => x.Trim().ToLower() == "openmod");
+        public bool IsOfficial => Id.StartsWith("OpenMod.", StringComparison.OrdinalIgnoreCase)
+                                  && Authors.Any(x => x.Trim().Equals("openmod", StringComparison.OrdinalIgnoreCase));
 
         public string CommandInstall => "openmod install " + Id;
     }
