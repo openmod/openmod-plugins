@@ -6,8 +6,13 @@ namespace OpenMod.Plugins.Data
 {
     public record Plugin(string Id, string Title, string Description, IReadOnlyList<string> Authors)
     {
-        public Plugin(SearchResult searchResult)
-            : this(searchResult.PackageId, searchResult.Title, searchResult.Description, searchResult.Authors)
+        public Plugin(SearchResult searchResult) : this(
+            searchResult.PackageId,
+            searchResult.Title,
+            searchResult.Description,
+            searchResult.Authors
+                .SelectMany(x => x.Split(',').Select(y => y.Trim()))
+                .ToList())
         {
         }
 
