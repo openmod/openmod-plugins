@@ -1,36 +1,38 @@
 ﻿@page "/"
 
-@if (_plugins.Length == 1)
+@inject IPluginRepository PluginRepository
+
+@if (_plugins == null)
 {
-    <MudText Typo="Typo.h4">There are @_plugins.Length plugin</MudText>
+    <MudText Typo="Typo.body1">Loading</MudText>
 }
 else
 {
-    <MudText Typo="Typo.h4">There are @_plugins.Length plugins</MudText>
+    // todo: use SmartFormat.NET for this
+    string _pluginsCountHeader = _plugins.Count == 1
+        ? $"There are {_plugins.Count} plugin"
+        : $"There are {_plugins.Count} plugins";
+
+    <MudText Typo="Typo.h4">@_pluginsCountHeader</MudText>
+
+    <br>
+    <br>
+
+    <MudGrid>
+        @foreach (var plugin in _plugins)
+        {
+            <PluginCard Data="@plugin"/>
+        }
+    </MudGrid>
 }
-
-<br>
-<br>
-
-<MudGrid>
-    @foreach (var plugin in _plugins)
-    {
-        <PluginCard Data="@plugin"/>
-    }
-</MudGrid>
 
 @code {
 
-    // todo: load from nuget 
-    private PluginCardData[] _plugins =
+    private IReadOnlyList<OpenMod.Plugins.Data.Plugin>? _plugins;
+
+    protected override async Task OnInitializedAsync()
     {
-    // for testing
-        new(Id: "OpenMod.Example",
-            Summary: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ante in nibh mauris cursus mattis molestie. Nulla facilisi morbi tempus iaculis urna id. Ut placerat orci nulla pellentesque dignissim enim sit amet venenatis.",
-            Owners: new[] {"OpenMod"}),
-        new(Id: "Kr4ken.NewEssentials",
-            Summary: "The Essential plugin for Unturned, built on OpenMod",
-            Owners: new[] {"alehmann"}),
-    };
+        _plugins = await PluginRepository.SearchAsync(query: "", skip: 0, take: 20, includePrerelease: true);
+    }
 
 }

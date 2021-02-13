@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using MudBlazor;
 using MudBlazor.Services;
+using OpenMod.Plugins.Services;
 
 namespace OpenMod.Plugins
 {
@@ -17,6 +18,8 @@ namespace OpenMod.Plugins
 
             builder.Services.AddScoped(
                 sp => new HttpClient {BaseAddress = new Uri(builder.HostEnvironment.BaseAddress)});
+
+            builder.Services.AddSingleton<IPluginRepository, PluginRepository>();
 
             builder.Services.AddMudBlazorSnackbar(config =>
             {
@@ -31,7 +34,7 @@ namespace OpenMod.Plugins
                 config.MaxDisplayedSnackbars = 7;
             });
             builder.Services.AddMudServices();
-            
+
             await builder.Build().RunAsync();
         }
     }

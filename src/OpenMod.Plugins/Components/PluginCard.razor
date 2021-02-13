@@ -9,7 +9,7 @@
         <MudCardHeader>
             <CardHeaderContent>
                 <MudText Typo="Typo.h5">
-                    @Data.Id
+                    @Data.Title
                     @if (Data.IsOfficial)
                     {
                         <MudTooltip Text="This plugin is created by OpenMod" Placement="Placement.Top">
@@ -20,7 +20,7 @@
                         </MudTooltip>
                     }
                     <MudText Typo="Typo.subtitle1" Style="display: inline; margin-left: 10px;">
-                        by: @string.Join(", ", Data.Owners)
+                        by: @string.Join(", ", Data.Authors)
                     </MudText>
                 </MudText>
             </CardHeaderContent>
@@ -31,7 +31,7 @@
             </CardHeaderActions>
         </MudCardHeader>
         <MudCardContent>
-            <MudText Typo="Typo.body1">@Data.Summary</MudText>
+            <MudText Typo="Typo.body1">@Data.Description</MudText>
         </MudCardContent>
     </MudCard>
 </MudItem>
@@ -39,7 +39,7 @@
 @code {
 
     [Parameter]
-    public PluginCardData Data { get; set; } = null!;
+    public OpenMod.Plugins.Data.Plugin Data { get; set; } = null!;
 
     // todo: refactor to a separate component?
     private async Task CopyToClipboardAsync()
