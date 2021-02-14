@@ -6,6 +6,6 @@ namespace OpenMod.Plugins.Services
 {
     public interface IPluginRepository
     {
-        Task<IReadOnlyList<Plugin>> SearchAsync(string query, int skip, int take, bool includePrerelease);
+        Task<PluginsResponse> SearchAsync(string query, int skip, int take, bool includePrerelease);
     }
 }

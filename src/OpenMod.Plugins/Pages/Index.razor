@@ -2,21 +2,21 @@
 
 @inject IPluginRepository PluginRepository
 
-@if (_plugins == null)
+@if (_pluginsResponce == null)
 {
     <MudText Typo="Typo.body1">Loading</MudText>
 }
 else
 {
     <MudText Typo="Typo.h4">
-        @Smart.Format("There {0:plural:is 1 plugin|are {} plugins}", _plugins.Count)
+        @Smart.Format("There {0:plural:is 1 plugin|are {} plugins}", _pluginsResponce.Total)
     </MudText>
 
     <br>
     <br>
 
     <MudGrid>
-        @foreach (var plugin in _plugins)
+        @foreach (var plugin in _pluginsResponce.Plugins)
         {
             <PluginCard Data="@plugin"/>
         }
@@ -25,11 +25,11 @@ else
 
 @code {
 
-    private IReadOnlyList<OpenMod.Plugins.Data.Plugin>? _plugins;
+    private PluginsResponse? _pluginsResponce;
 
     protected override async Task OnInitializedAsync()
     {
-        _plugins = await PluginRepository.SearchAsync(query: "", skip: 0, take: 20, includePrerelease: true);
+        _pluginsResponce = await PluginRepository.SearchAsync(query: "", skip: 0, take: 20, includePrerelease: true);
     }
 
 }
