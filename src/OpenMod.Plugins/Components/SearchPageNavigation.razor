@@ -1,0 +1,33 @@
+﻿@inject NavigationManager NavigationManager
+
+<br>
+<br>
+<MudContainer MaxWidth="MaxWidth.Large" Class="mb-0">
+    <MudToolBar DisableGutters="true">
+        <MudButton Style="text-transform: none;"
+                   StartIcon="@Icons.Filled.NavigateBefore"
+                   Link="@PreviousPageLink"
+                   Disabled="@(PreviousPageLink == null)">
+            Previous
+        </MudButton>
+        <MudToolBarSpacer/>
+        <MudButton Style="float: right; text-transform: none;"
+                   EndIcon="@Icons.Filled.NavigateNext"
+                   Link="@NextPageLink"
+                   Disabled="@(NextPageLink == null)">
+            Next
+        </MudButton>
+    </MudToolBar>
+</MudContainer>
+<br>
+<br>
+
+@code{
+
+    [Parameter]
+    public string? PreviousPageLink { get; set; }
+
+    [Parameter]
+    public string? NextPageLink { get; set; }
+
+}
