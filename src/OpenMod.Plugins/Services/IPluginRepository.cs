@@ -1,6 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using OpenMod.Plugins.Data;
+﻿using System.Threading.Tasks;
+using OpenMod.Plugins.Models;
 
 namespace OpenMod.Plugins.Services
 {

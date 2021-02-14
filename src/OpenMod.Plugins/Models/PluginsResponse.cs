@@ -2,7 +2,7 @@
 using System.Linq;
 using BaGet.Protocol.Models;
 
-namespace OpenMod.Plugins.Data
+namespace OpenMod.Plugins.Models
 {
     public record PluginsResponse(long Total, IReadOnlyList<Plugin> Plugins)
     {

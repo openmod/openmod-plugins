@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using BaGet.Protocol.Models;
 
-namespace OpenMod.Plugins.Data
+namespace OpenMod.Plugins.Models
 {
     public record Plugin(
         string Id,
