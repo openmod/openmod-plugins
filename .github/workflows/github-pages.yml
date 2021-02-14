@@ -1,0 +1,42 @@
+﻿name: GitHub Pages
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 5.0.x
+
+      - name: Publish with dotnet
+        run: dotnet publish --configuration Release --output release
+
+      # Change the base tag and segments count to match GitHub Pages repository subdirectory
+      - name: Change base tag
+        run: |
+          sed -i 's/<base href="\/"\/>/<base href="\/openmod-plugins\/"\/>/g' release/wwwroot/index.html
+          sed -i 's/var segmentCount = 0;/var segmentCount = 1;/g' release/wwwroot/404.html
+
+      # Add .nojekyll file to tell GitHub Pages to not treat this as a Jekyll project
+      # Allows files and folders starting with an underscore
+      - name: Add .nojekyll file
+        run: touch release/wwwroot/.nojekyll
+
+      - name: Deploy to GitHub Pages
+        if: github.event_name == 'push'
+        uses: JamesIves/github-pages-deploy-action@releases/v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: gh-pages
+          folder: release/wwwroot
