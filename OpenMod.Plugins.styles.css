@@ -1,0 +1,27 @@
+/* /Shared/NavBar.razor.rz.scp.css */
+[b-n40vh14wct] div .brand-text {
+    letter-spacing: .2rem;
+    font-weight: 300;
+    font-size: 24px;
+    user-select: none;
+}
+
+[b-n40vh14wct] .search-bar.mud-input-control {
+    margin-bottom: 5px;
+    border-radius: var(--mud-default-borderradius);
+    background-color: rgba(255,255,255,.15);
+}
+
+[b-n40vh14wct] .search-bar.mud-input-control .mud-input {
+    height: 42px;
+}
+
+[b-n40vh14wct] .search-bar .mud-input.mud-input-outlined .mud-input-outlined-border {
+    border: none;
+    border-radius: var(--mud-default-borderradius);
+}
+
+[b-n40vh14wct] .search-bar.mud-input-control .mud-input-root,
+[b-n40vh14wct] .search-bar.mud-input-control .mud-icon-default {
+    color: #fafafa;
+}
