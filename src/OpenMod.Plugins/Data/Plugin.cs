@@ -5,7 +5,12 @@ using BaGet.Protocol.Models;
 
 namespace OpenMod.Plugins.Data
 {
-    public record Plugin(string Id, string Title, string Description, IReadOnlyList<string> Authors)
+    public record Plugin(
+        string Id,
+        string Title,
+        string Description,
+        IReadOnlyList<string> Authors,
+        string? SiteUrl)
     {
         public Plugin(SearchResult searchResult) : this(
             searchResult.PackageId,
@@ -13,7 +18,8 @@ namespace OpenMod.Plugins.Data
             searchResult.Description,
             searchResult.Authors
                 .SelectMany(x => x.Split(',').Select(y => y.Trim()))
-                .ToList())
+                .ToList(),
+            searchResult.ProjectUrl)
         {
         }
 
@@ -21,5 +27,7 @@ namespace OpenMod.Plugins.Data
                                   && Authors.Any(x => x.Trim().Equals("openmod", StringComparison.OrdinalIgnoreCase));
 
         public string CommandInstall => "openmod install " + Id;
+
+        public string NuGetUrl => "https://www.nuget.org/packages/" + Id;
     }
 }
