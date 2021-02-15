@@ -13,6 +13,12 @@ namespace OpenMod.Plugins.Extensions
             return result == default ? default : (T) result;
         }
 
+        public static T GetQuery<T>(this NavigationManager navigationManager, string key, T defaultValue)
+        {
+            var result = GetQuery(navigationManager, typeof(T), key);
+            return result == default ? defaultValue : (T) result;
+        }
+
         public static object? GetQuery(this NavigationManager navigationManager, Type type, string key)
         {
             var uri = navigationManager.ToAbsoluteUri(navigationManager.Uri);

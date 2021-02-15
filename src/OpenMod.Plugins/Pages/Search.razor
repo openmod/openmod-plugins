@@ -12,14 +12,28 @@
 else
 {
     <MudText Typo="Typo.h4">
-        @Smart.Format("There {0:plural:is 1 plugin|are {} plugins}", _pluginsResponce.Total)
+        @if (string.IsNullOrEmpty(_searchQuery))
+        {
+            @Smart.Format("There {0:plural:is 1 plugin|are {} plugins}", _pluginsResponce.Total)
+        }
+        else
+        {
+            @Smart.Format("{0:plural:1 plugin|{} plugins} returned for {1}", _pluginsResponce.Total, _searchQuery)
+        }
     </MudText>
     <br>
     <br>
     <MudGrid>
-        @foreach (var plugin in _pluginsResponce.Plugins)
+        @if (_currentPage > 0 && _pluginsResponce.Total > 0 && _pluginsResponce.Plugins.Count == 0)
         {
-            <PluginCard Data="@plugin"/>
+            <MudAlert Severity="Severity.Error" Variant="Variant.Text" Style="width: inherit;">No plugins found on this page.</MudAlert>
+        }
+        else
+        {
+            foreach (var plugin in _pluginsResponce.Plugins)
+            {
+                <PluginCard Data="@plugin"/>
+            }
         }
     </MudGrid>
     <SearchPageNavigation PreviousPageLink="@_previousPageLink" NextPageLink="@_nextPageLink"/>
@@ -30,6 +44,8 @@ else
     private PluginsResponse? _pluginsResponce;
     private string? _previousPageLink;
     private string? _nextPageLink;
+    private string _searchQuery = string.Empty;
+    private int _currentPage;
 
     protected override async Task OnInitializedAsync()
     {
@@ -44,24 +60,27 @@ else
 
     private async Task LoadPluginsAsync()
     {
-        int currentPage = NavigationManager.GetQuery<int>("page");
+        _searchQuery = NavigationManager.GetQuery<string>("query", defaultValue: string.Empty);
+        _currentPage = NavigationManager.GetQuery<int>("page");
         int pageSize = 20;
 
         _pluginsResponce = await PluginRepository.SearchAsync(
-            query: "",
-            skip: currentPage * pageSize,
+            query: _searchQuery,
+            skip: _currentPage * pageSize,
             take: pageSize,
             includePrerelease: true);
 
         int lastPage = (int) ((_pluginsResponce.Total + pageSize - 1) / pageSize) - 1;
+        int previousPage = _currentPage > lastPage ? lastPage : _currentPage - 1;
+        int nextPage = _currentPage + 1;
 
-        _previousPageLink = currentPage == 0
+        _previousPageLink = _currentPage == 0
             ? null
-            : "search?page=" + (currentPage > lastPage ? lastPage : currentPage - 1);
+            : $"search?page={previousPage}&query={_searchQuery}";
 
-        _nextPageLink = currentPage >= lastPage
+        _nextPageLink = _currentPage >= lastPage
             ? null
-            : "search?page=" + (currentPage + 1);
+            : $"search?page={nextPage}&query={_searchQuery}";
     }
 
     private async void HandleLocationChanged(object? sender, LocationChangedEventArgs args)

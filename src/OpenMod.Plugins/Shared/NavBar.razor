@@ -1,16 +1,20 @@
-﻿<div>
+﻿@inject NavigationManager NavigationManager
+
+<div>
     <MudAppBar Fixed="false">
         <MudHidden Breakpoint="Breakpoint.SmAndUp" Invert="true">
             <MudText Typo="Typo.h5" Class="brand-text">OpenMod Plugins</MudText>
         </MudHidden>
         <MudAppBarSpacer/>
         <MudItem xs="12" sm="6" md="4">
-            @* todo: make search working *@
-            <MudTextField @bind-Value="@SearchValue"
+            <MudTextField @bind-Value="@SearchQuery"
                            Placeholder="Search"
                            Variant="Variant.Outlined"
                            Adornment="Adornment.End"
                            AdornmentIcon="@Icons.Filled.Search"
+                           OnAdornmentClick="@Search"
+                           OnKeyDown="@SearchFieldKeyDownEventHandler"
+                           Immediate="true"
                            DisableUnderLine="true"
                            Class="search-bar"/>
         </MudItem>
@@ -29,6 +33,21 @@
     [Parameter]
     public EventCallback OnThemeRotateRequest { get; set; }
 
-    public string SearchValue { get; set; } = string.Empty;
+    public string SearchQuery { get; set; } = string.Empty;
+
+    private void SearchFieldKeyDownEventHandler(KeyboardEventArgs args)
+    {
+        Console.WriteLine(args.Key);
+
+        if (args.Key.Equals("enter", StringComparison.OrdinalIgnoreCase))
+        {
+            Search();
+        }
+    }
+
+    private void Search()
+    {
+        NavigationManager.NavigateTo(SearchQuery == string.Empty ? string.Empty : "search?query=" + SearchQuery);
+    }
 
 }
