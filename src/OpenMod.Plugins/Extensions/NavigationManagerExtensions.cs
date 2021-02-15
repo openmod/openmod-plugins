@@ -22,11 +22,21 @@ namespace OpenMod.Plugins.Extensions
         public static object? GetQuery(this NavigationManager navigationManager, string uri, Type type, string key)
         {
             var absoluteUri = navigationManager.ToAbsoluteUri(uri);
+            var queries = QueryHelpers.ParseQuery(absoluteUri.Query);
 
-            if (QueryHelpers.ParseQuery(absoluteUri.Query).TryGetValue(key, out var query))
+            if (queries.TryGetValue(key, out var query) && !string.IsNullOrEmpty(query))
             {
                 var converter = TypeDescriptor.GetConverter(type);
-                return converter.ConvertFrom((string) query);
+                try
+                {
+                    return converter.ConvertFrom((string) query);
+                }
+                catch (ArgumentException ex)
+                {
+                    Console.Error.WriteLine(
+                        "Failed to convert a query parameter. Returning default value: " + ex.Message);
+                    return null;
+                }
             }
 
             return null;
