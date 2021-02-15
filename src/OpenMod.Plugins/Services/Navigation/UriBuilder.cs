@@ -12,12 +12,19 @@ namespace OpenMod.Plugins.Services.Navigation
 
         public string Search(int page, string query)
         {
-            var @params = new Dictionary<string, string>
+            var queries = new Dictionary<string, string>(capacity: 5);
+
+            if (page != 0)
             {
-                {"page", page.ToString()},
-                {"query", query},
-            };
-            return QueryHelpers.AddQueryString(uri: "search", @params);
+                queries["page"] = page.ToString();
+            }
+
+            if (query != "")
+            {
+                queries["query"] = query;
+            }
+
+            return QueryHelpers.AddQueryString(uri: "search", queries);
         }
     }
 }
