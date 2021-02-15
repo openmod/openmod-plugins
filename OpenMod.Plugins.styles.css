@@ -9,7 +9,7 @@
 [b-n40vh14wct] .search-bar.mud-input-control {
     margin-bottom: 5px;
     border-radius: var(--mud-default-borderradius);
-    background-color: rgba(255,255,255,.15);
+    background-color: rgba(255, 255, 255, .15);
 }
 
 [b-n40vh14wct] .search-bar.mud-input-control .mud-input {
@@ -22,6 +22,7 @@
 }
 
 [b-n40vh14wct] .search-bar.mud-input-control .mud-input-root,
+[b-n40vh14wct] .search-bar.mud-input-control .mud-button-root,
 [b-n40vh14wct] .search-bar.mud-input-control .mud-icon-default {
     color: #fafafa;
 }
