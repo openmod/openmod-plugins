@@ -1,9 +1,13 @@
-﻿@inject INavigator Navigator
+﻿@implements IDisposable
+
+@inject INavigator Navigator
+@inject NavigationManager NavigationManager
+@inject IQueryParser QueryParser
 
 <div>
     <MudAppBar Fixed="false">
         <MudHidden Breakpoint="Breakpoint.SmAndUp" Invert="true">
-            <MudText Typo="Typo.h5" Class="brand-text">OpenMod Plugins</MudText>
+            <MudText Typo="Typo.h5" @onclick="@Navigator.Index" Class="brand-text">OpenMod Plugins</MudText>
         </MudHidden>
         <MudAppBarSpacer/>
         <MudItem xs="12" sm="6" md="4">
@@ -34,6 +38,28 @@
     public EventCallback OnThemeRotateRequest { get; set; }
 
     public string SearchQuery { get; set; } = string.Empty;
+
+    protected override void OnInitialized()
+    {
+        SetSearchQueryFromUriToTextBox();
+        NavigationManager.LocationChanged += HandleLocationChanged;
+    }
+
+    public void Dispose()
+    {
+        NavigationManager.LocationChanged -= HandleLocationChanged;
+    }
+
+    private void HandleLocationChanged(object? sender, LocationChangedEventArgs args)
+    {
+        SetSearchQueryFromUriToTextBox();
+    }
+
+    private void SetSearchQueryFromUriToTextBox()
+    {
+        QueryParser.Search(null, out _, out string query);
+        SearchQuery = query;
+    }
 
     private void SearchFieldKeyDownEventHandler(KeyboardEventArgs args)
     {
