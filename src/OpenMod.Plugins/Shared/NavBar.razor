@@ -1,4 +1,4 @@
-﻿@inject NavigationManager NavigationManager
+﻿@inject INavigator Navigator
 
 <div>
     <MudAppBar Fixed="false">
@@ -12,7 +12,7 @@
                            Variant="Variant.Outlined"
                            Adornment="Adornment.End"
                            AdornmentIcon="@Icons.Filled.Search"
-                           OnAdornmentClick="@Search"
+                           OnAdornmentClick="@(() => Navigator.Search(page: 0, query: SearchQuery))"
                            OnKeyDown="@SearchFieldKeyDownEventHandler"
                            Immediate="true"
                            DisableUnderLine="true"
@@ -37,17 +37,10 @@
 
     private void SearchFieldKeyDownEventHandler(KeyboardEventArgs args)
     {
-        Console.WriteLine(args.Key);
-
         if (args.Key.Equals("enter", StringComparison.OrdinalIgnoreCase))
         {
-            Search();
+            Navigator.Search(page: 0, query: SearchQuery);
         }
-    }
-
-    private void Search()
-    {
-        NavigationManager.NavigateTo(SearchQuery == string.Empty ? string.Empty : "search?query=" + SearchQuery);
     }
 
 }

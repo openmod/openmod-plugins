@@ -30,13 +30,7 @@
                         <MudIconButton Icon="@Icons.Material.Filled.ContentCopy" @onclick="@CopyToClipboardAsync"/>
                     </MudTooltip>
                     <MudMenu Icon="@Icons.Material.Filled.MoreVert" Direction="Direction.Bottom" OffsetY="true">
-                        <MudText Typo="Typo.body2" Class="px-4 py-2">
-                            <b>Sites</b>
-                        </MudText>
-                        @{
-                            bool siteDisabled = Data.SiteUrl == null;
-                        }
-                        <MudMenuItem Link="@Data.SiteUrl" Target="_blank" Disabled="@siteDisabled">Plugin site</MudMenuItem>
+                        <MudMenuItem Link="@Data.SiteUrl" Target="_blank" Disabled="@(Data.SiteUrl == null)">Home page</MudMenuItem>
                         <MudMenuItem Link="@Data.NuGetUrl" Target="_blank">NuGet page</MudMenuItem>
                     </MudMenu>
                 </div>

@@ -2,6 +2,8 @@
 
 @implements IDisposable
 
+@inject IQueryParser QueryParser
+@inject IUriBuilder UriBuilder
 @inject NavigationManager NavigationManager
 @inject IPluginRepository PluginRepository
 
@@ -60,8 +62,8 @@ else
 
     private async Task LoadPluginsAsync()
     {
-        _searchQuery = NavigationManager.GetQuery<string>("query", defaultValue: string.Empty);
-        _currentPage = NavigationManager.GetQuery<int>("page");
+        QueryParser.Search(null, out _currentPage, out _searchQuery);
+
         int pageSize = 20;
 
         _pluginsResponce = await PluginRepository.SearchAsync(
@@ -74,13 +76,8 @@ else
         int previousPage = _currentPage > lastPage ? lastPage : _currentPage - 1;
         int nextPage = _currentPage + 1;
 
-        _previousPageLink = _currentPage == 0
-            ? null
-            : $"search?page={previousPage}&query={_searchQuery}";
-
-        _nextPageLink = _currentPage >= lastPage
-            ? null
-            : $"search?page={nextPage}&query={_searchQuery}";
+        _previousPageLink = _currentPage == 0 ? null : UriBuilder.Search(page: previousPage, query: _searchQuery);
+        _nextPageLink = _currentPage >= lastPage ? null : UriBuilder.Search(page: nextPage, query: _searchQuery);
     }
 
     private async void HandleLocationChanged(object? sender, LocationChangedEventArgs args)

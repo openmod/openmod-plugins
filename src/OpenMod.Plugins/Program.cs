@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using MudBlazor;
 using MudBlazor.Services;
 using OpenMod.Plugins.Services;
+using OpenMod.Plugins.Services.Navigation;
 
 namespace OpenMod.Plugins
 {
@@ -19,6 +20,9 @@ namespace OpenMod.Plugins
             builder.Services.AddScoped(
                 sp => new HttpClient {BaseAddress = new Uri(builder.HostEnvironment.BaseAddress)});
 
+            builder.Services.AddSingleton<INavigator, Navigator>();
+            builder.Services.AddSingleton<IQueryParser, QueryParser>();
+            builder.Services.AddSingleton<IUriBuilder, OpenMod.Plugins.Services.Navigation.UriBuilder>();
             builder.Services.AddSingleton<IPluginRepository, PluginRepository>();
 
             builder.Services.AddMudBlazorSnackbar(config =>
