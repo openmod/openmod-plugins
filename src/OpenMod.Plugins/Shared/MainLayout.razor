@@ -9,24 +9,6 @@
 
     <MudMainContent>
         <MudContainer>
-
-            @code {
-#if DEBUG
-                bool _isDebug = true;
-#else
-                bool _isDebug = false;
-#endif
-            }
-
-            @* todo: remove when the site is done (including <br/>) *@
-            @if (!_isDebug)
-            {
-                <MudAlert Severity="Severity.Warning" Variant="Variant.Text">The site is in development and may not work correctly.</MudAlert>
-                <br/>
-                <br/>
-                <br/>
-            }
-
             @Body
         </MudContainer>
         <MudScrollToTop TopOffset="400">
