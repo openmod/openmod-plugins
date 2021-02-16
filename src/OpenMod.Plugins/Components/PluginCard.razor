@@ -8,8 +8,8 @@
     <MudCard>
         <MudCardHeader Style="padding-bottom: 0">
             <CardHeaderContent>
-                <MudText Typo="Typo.h5">
-                    @Data.Title
+                <MudText Typo="Typo.h5" Style="overflow-wrap: anywhere;">
+                    @Data.Id
                     @if (Data.IsOfficial)
                     {
                         <MudTooltip Text="This plugin is created by OpenMod" Placement="Placement.Top">
@@ -19,8 +19,8 @@
                                      Style="margin-left: 10px;"/>
                         </MudTooltip>
                     }
-                    <MudText Typo="Typo.subtitle1" Style="display: inline; margin-left: 10px;">
-                        by: @Smart.Format("{0:list:{}|, | and }", new object[] {Data.Authors})
+                    <MudText Typo="Typo.subtitle1" Style="display: inline-block; margin-left: 10px;">
+                        by @Smart.Format("{0:list:{}|, | and }", Data.Authors)
                     </MudText>
                 </MudText>
                 <PluginCardInfoItem Icon="@Icons.Material.Outlined.Download" IsFirst="true">
@@ -32,17 +32,22 @@
             </CardHeaderContent>
             <CardHeaderActions>
                 <div style="display: inline-flex;">
-                    <MudTooltip Text="Copy install command" Placement="Placement.Top">
-                        <MudIconButton Icon="@Icons.Material.Filled.ContentCopy" @onclick="@CopyToClipboardAsync"/>
-                    </MudTooltip>
+                    <MudHidden Breakpoint="Breakpoint.SmAndUp" Invert="true">
+                        <MudTooltip Text="Copy install command" Placement="Placement.Top">
+                            <MudIconButton Icon="@Icons.Material.Filled.ContentCopy" @onclick="@CopyToClipboardAsync"/>
+                        </MudTooltip>
+                    </MudHidden>
                     <MudMenu Icon="@Icons.Material.Filled.MoreVert" Direction="Direction.Bottom" OffsetY="true">
+                        <MudHidden Breakpoint="Breakpoint.SmAndUp" Invert="false">
+                            <MudMenuItem @onclick="@CopyToClipboardAsync">Copy install command</MudMenuItem>
+                        </MudHidden>
                         <MudMenuItem Link="@Data.SiteUrl" Target="_blank" Disabled="@(Data.SiteUrl == null)">Home page</MudMenuItem>
                         <MudMenuItem Link="@Data.NuGetUrl" Target="_blank">NuGet page</MudMenuItem>
                     </MudMenu>
                 </div>
             </CardHeaderActions>
         </MudCardHeader>
-        <MudCardContent>
+        <MudCardContent Style="@(Data.Description == "" ? "padding-top: 0;" : "")">
             <MudText Typo="Typo.body1">@Data.Description</MudText>
         </MudCardContent>
     </MudCard>
@@ -56,8 +61,7 @@
     // todo: refactor to a separate component?
     private async Task CopyToClipboardAsync()
     {
-    // Writing to the clipboard may be denied, so we must handle the exception
-        try
+        try // Writing to the clipboard may be denied, so we must handle the exception
         {
             await JsRuntime.InvokeVoidAsync("navigator.clipboard.writeText", Data.CommandInstall);
             Snackbar.Add("Command copied!", Severity.Success);

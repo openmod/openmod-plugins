@@ -23,12 +23,19 @@
                            Class="search-bar"/>
         </MudItem>
         <MudAppBarSpacer/>
-        <MudTooltip Text="Toggle light/dark theme">
-            <MudIconButton Icon="@Icons.Material.Filled.Brightness4" Color="Color.Inherit" OnClick="@OnThemeRotateRequest"/>
-        </MudTooltip>
-        <MudDivider Vertical="true" FlexItem="true" DividerType="DividerType.Middle" Class="mx-4 my-5"/>
-        @* todo: put github link, add tooltip *@
-        <MudIconButton Icon="@Icons.Custom.Brands.GitHub" Color="Color.Inherit"/>
+        <MudHidden Breakpoint="Breakpoint.MdAndUp" Invert="true">
+            <MudButton Link="https://github.com/openmod/openmod" Target="_blank" Color="Color.Inherit">Get OpenMod</MudButton>
+            <MudDivider Vertical="true" FlexItem="true" DividerType="DividerType.Middle" Class="mx-4 my-5"/>
+            <MudTooltip Text="Toggle light/dark theme" Placement="Placement.Start">
+                <MudIconButton OnClick="@OnThemeRotateRequest" Icon="@Icons.Material.Filled.Brightness4" Color="Color.Inherit"/>
+            </MudTooltip>
+        </MudHidden>
+        <MudHidden Breakpoint="Breakpoint.MdAndUp" Invert="false">
+            <MudMenu Icon="@Icons.Filled.KeyboardArrowDown" Direction="Direction.Right" OffsetY="true" Color="Color.Inherit">
+                <MudMenuItem Link="https://github.com/openmod/openmod" Target="_blank">Get OpenMod</MudMenuItem>
+                <MudMenuItem OnClick="@OnThemeRotateRequest">Toggle light/dark theme</MudMenuItem>
+            </MudMenu>
+        </MudHidden>
     </MudAppBar>
 </div>
 

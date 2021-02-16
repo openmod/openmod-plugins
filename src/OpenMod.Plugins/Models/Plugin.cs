@@ -7,7 +7,6 @@ namespace OpenMod.Plugins.Models
 {
     public record Plugin(
         string Id,
-        string Title,
         string Description,
         IReadOnlyList<string> Authors,
         string? SiteUrl,
@@ -16,7 +15,6 @@ namespace OpenMod.Plugins.Models
     {
         public Plugin(SearchResult searchResult) : this(
             searchResult.PackageId,
-            searchResult.Title,
             FixDescription(searchResult.Description),
             FixAuthors(searchResult.Authors),
             searchResult.ProjectUrl,

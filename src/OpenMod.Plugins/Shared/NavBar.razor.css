@@ -3,6 +3,7 @@
     font-weight: 300;
     font-size: 24px;
     user-select: none;
+    white-space: nowrap;
 }
 
 ::deep .search-bar.mud-input-control {
