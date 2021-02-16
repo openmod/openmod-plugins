@@ -10,14 +10,18 @@ namespace OpenMod.Plugins.Models
         string Title,
         string Description,
         IReadOnlyList<string> Authors,
-        string? SiteUrl)
+        string? SiteUrl,
+        long TotalDownloads,
+        string LatestVersion)
     {
         public Plugin(SearchResult searchResult) : this(
             searchResult.PackageId,
             searchResult.Title,
             FixDescription(searchResult.Description),
             FixAuthors(searchResult.Authors),
-            searchResult.ProjectUrl)
+            searchResult.ProjectUrl,
+            searchResult.TotalDownloads,
+            searchResult.Version)
         {
         }
 

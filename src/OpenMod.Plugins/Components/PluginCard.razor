@@ -6,7 +6,7 @@
 
 <MudItem xs="12" md="12">
     <MudCard>
-        <MudCardHeader>
+        <MudCardHeader Style="padding-bottom: 0">
             <CardHeaderContent>
                 <MudText Typo="Typo.h5">
                     @Data.Title
@@ -23,6 +23,12 @@
                         by: @Smart.Format("{0:list:{}|, | and }", new object[] {Data.Authors})
                     </MudText>
                 </MudText>
+                <PluginCardInfoItem Icon="@Icons.Material.Outlined.Download" IsFirst="true">
+                    @($"{Data.TotalDownloads:n0}") downloads
+                </PluginCardInfoItem>
+                <PluginCardInfoItem Icon="@Icons.Material.Outlined.Flag">
+                    latest version: @Data.LatestVersion
+                </PluginCardInfoItem>
             </CardHeaderContent>
             <CardHeaderActions>
                 <div style="display: inline-flex;">
@@ -45,7 +51,7 @@
 @code {
 
     [Parameter]
-    public OpenMod.Plugins.Models.Plugin Data { get; set; } = null!;
+    public Plugin Data { get; set; } = null!;
 
     // todo: refactor to a separate component?
     private async Task CopyToClipboardAsync()
