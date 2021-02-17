@@ -23,10 +23,15 @@ jobs:
         run: dotnet publish --configuration Release --output release
 
       # Change the base tag and segments count to match GitHub Pages repository subdirectory
-      - name: Change base tag
+      - name: Configure
         run: |
           sed -i 's/<base href="\/"\/>/<base href="\/openmod-plugins\/"\/>/g' release/wwwroot/index.html
           sed -i 's/var segmentCount = 0;/var segmentCount = 1;/g' release/wwwroot/404.html
+
+      # Fixes 404 response. Add here all pages
+      - name: Create static pages
+        run: |
+          cp release/wwwroot/404.html release/wwwroot/search.html
 
       # Add .nojekyll file to tell GitHub Pages to not treat this as a Jekyll project
       # Allows files and folders starting with an underscore
