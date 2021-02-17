@@ -36,7 +36,7 @@
                     </MudText>
                 </MudText>
                 <PluginCardInfoItem Icon="@Icons.Material.Outlined.Download" IsFirst="true">
-                    @($"{Data.TotalDownloads:n0}") downloads
+                    @Smart.Format("{0:plural:{:n0} download|{:n0} downloads}", Data.TotalDownloads)
                 </PluginCardInfoItem>
                 <PluginCardInfoItem Icon="@Icons.Material.Outlined.Flag">
                     latest version: @Data.LatestVersion
