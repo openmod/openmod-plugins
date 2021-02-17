@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using BaGet.Protocol.Models;
 
@@ -8,8 +9,16 @@ namespace OpenMod.Plugins.Models
     {
         public PluginsResponse(SearchResponse searchResponse) : this(
             searchResponse.TotalHits,
-            searchResponse.Data.Select(x => new Plugin(x)).ToList())
+            GetValidPlugins(searchResponse))
         {
+        }
+
+        private static IReadOnlyList<Plugin> GetValidPlugins(SearchResponse searchResponse)
+        {
+            return searchResponse.Data
+                .Where(x => x.Tags.Contains("openmod-plugin", StringComparer.OrdinalIgnoreCase))
+                .Select(x => new Plugin(x))
+                .ToList();
         }
     }
 }
