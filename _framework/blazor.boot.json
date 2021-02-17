@@ -3,7 +3,7 @@
   "config": [ ],
   "debugBuild": false,
   "entryAssembly": "OpenMod.Plugins",
-  "icuDataMode": 2,
+  "icuDataMode": 0,
   "linkerEnabled": true,
   "resources": {
     "assembly": {
@@ -64,12 +64,16 @@
       "System.Text.Encodings.Web.dll": "sha256-07aGup+AyG3fiQMh\/soX\/keG\/sv\/EFerxmXtuG7+xtk=",
       "System.Text.Json.dll": "sha256-b6zmyARoV0hDYn+e4onNRw0QW0U0xeUzkCkDnKtlJ\/M=",
       "System.Text.RegularExpressions.dll": "sha256-ccVUb8pIm9GdfQgFZnukogFXcIn+KgwXvNUuz6ayZ0A=",
-      "System.Private.CoreLib.dll": "sha256-SzzGVR+pWJizA7dk1PBAdqGQB3KQb9uDJ85A\/RIjIyo="
+      "System.Private.CoreLib.dll": "sha256-K38Kbm7vIjLRBwjc85VFjPX\/t8cnBupSRsen+HUInOo="
     },
     "lazyAssembly": null,
     "pdb": null,
     "runtime": {
       "dotnet.wasm": "sha256-+NqBIg7FTMeA2q0mxzbehfuE2WPrnq53yqLsu47afbY=",
+      "icudt.dat": "sha256-m7NyeXyxM+CL04jr9ui1Z6pVfMWwhHusuz5qNZWpAwA=",
+      "icudt_CJK.dat": "sha256-91bygK5voY9lG5wxP0\/uj7uH5xljF9u7iWnSldT1Z\/g=",
+      "icudt_EFIGS.dat": "sha256-DPfeOLph83b2rdx40cKxIBcfVZ8abTWAFq+RBQMxGw0=",
+      "icudt_no_CJK.dat": "sha256-oM7Z6aN9jHmCYqDMCBwFgFAYAGgsH1jLC\/Z6DYeVmmk=",
       "dotnet.5.0.3.js": "sha256-sf1arnHfzSTa9MZNpdWBkQTecBMQBQRynOZ8+\/iLMUg="
     },
     "satelliteResources": null
