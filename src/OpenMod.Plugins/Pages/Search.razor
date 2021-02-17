@@ -70,7 +70,7 @@ else
             query: _searchQuery,
             skip: _currentPage * pageSize,
             take: pageSize,
-            includePrerelease: true);
+            includePrerelease: false);
 
         int lastPage = (int) ((_pluginsResponce.Total + pageSize - 1) / pageSize) - 1;
         int previousPage = _currentPage > lastPage ? lastPage : _currentPage - 1;
