@@ -9,6 +9,18 @@
         <MudCardHeader Style="padding-bottom: 0">
             <CardHeaderContent>
                 <MudText Typo="Typo.h5" Style="overflow-wrap: anywhere;">
+                    @if (Data.Tags.Contains("universal", StringComparer.OrdinalIgnoreCase))
+                    {
+                        <MudChip Size="Size.Small" Style="margin-right: 10px; color: white; background-color: #d41354;">
+                            Universal
+                        </MudChip>
+                    }
+                    @if (Data.Tags.Contains("unturned", StringComparer.OrdinalIgnoreCase))
+                    {
+                        <MudChip Size="Size.Small" Style="margin-right: 10px; color: white; background-color: #006b2c;">
+                            Unturned
+                        </MudChip>
+                    }
                     @Data.Id
                     @if (Data.IsOfficial)
                     {

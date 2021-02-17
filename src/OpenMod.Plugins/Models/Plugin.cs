@@ -11,7 +11,8 @@ namespace OpenMod.Plugins.Models
         IReadOnlyList<string> Authors,
         string? SiteUrl,
         long TotalDownloads,
-        string LatestVersion)
+        string LatestVersion,
+        IReadOnlyList<string> Tags)
     {
         public Plugin(SearchResult searchResult) : this(
             searchResult.PackageId,
@@ -19,7 +20,8 @@ namespace OpenMod.Plugins.Models
             FixAuthors(searchResult.Authors),
             searchResult.ProjectUrl,
             searchResult.TotalDownloads,
-            searchResult.Version)
+            searchResult.Version,
+            searchResult.Tags)
         {
         }
 
@@ -36,7 +38,7 @@ namespace OpenMod.Plugins.Models
             return description.Trim() == "Package Description" ? "" : description;
         }
 
-        private static IReadOnlyList<string> FixAuthors(IReadOnlyList<string> authors)
+        private static IReadOnlyList<string> FixAuthors(IEnumerable<string> authors)
         {
             return authors
                 .SelectMany(x => x
