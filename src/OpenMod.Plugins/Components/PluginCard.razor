@@ -32,11 +32,11 @@
                         </MudTooltip>
                     }
                     <MudText Typo="Typo.subtitle1" Style="display: inline-block; margin-left: 10px;">
-                        by @Smart.Format("{0:list:{}|, | and }", Data.Authors)
+                        by @StringUtils.Commaize(Data.Authors)
                     </MudText>
                 </MudText>
                 <PluginCardInfoItem Icon="@Icons.Material.Outlined.Download" IsFirst="true">
-                    @Smart.Format("{0:plural:{:n0} download|{:n0} downloads}", Data.TotalDownloads)
+                    @(Data.TotalDownloads == 1 ? "1 download" : $"{Data.TotalDownloads:n0} downloads")
                 </PluginCardInfoItem>
                 <PluginCardInfoItem Icon="@Icons.Material.Outlined.Flag">
                     latest version: @Data.LatestVersion

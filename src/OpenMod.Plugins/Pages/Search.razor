@@ -14,14 +14,9 @@
 else
 {
     <MudText Typo="Typo.h4">
-        @if (string.IsNullOrEmpty(_searchQuery))
-        {
-            @Smart.Format("There {0:plural:is 1 plugin|are {} plugins}", _pluginsResponce.Total)
-        }
-        else
-        {
-            @Smart.Format("{0:plural:1 plugin|{} plugins} returned for {1}", _pluginsResponce.Total, _searchQuery)
-        }
+        @(string.IsNullOrEmpty(_searchQuery)
+            ? _pluginsResponce.Total == 1 ? "There is 1 plugin" : $"There are {_pluginsResponce.Total:n0} plugins"
+            : (_pluginsResponce.Total == 1 ? "1 plugin" : $"{_pluginsResponce.Total:n0} plugins") + " returned for " + _searchQuery)
     </MudText>
     <br>
     <br>
