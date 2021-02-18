@@ -45,12 +45,18 @@
             <CardHeaderActions>
                 <div style="display: inline-flex;">
                     <MudHidden Breakpoint="Breakpoint.SmAndUp" Invert="true">
+                        <MudTooltip Text="View license" Placement="Placement.Top">
+                            <MudButton Link="@Data.LicenseUrl" Target="_blank" Style="margin-top: 6px;">License</MudButton>
+                        </MudTooltip>
+                    </MudHidden>
+                    <MudHidden Breakpoint="Breakpoint.MdAndUp" Invert="true">
                         <MudTooltip Text="Copy install command" Placement="Placement.Top">
                             <MudButton Style="margin-top: 6px;" @onclick="@CopyToClipboardAsync">Copy install command</MudButton>
                         </MudTooltip>
                     </MudHidden>
                     <MudMenu Icon="@Icons.Material.Filled.MoreVert" Direction="Direction.Bottom" OffsetY="true">
-                        <MudHidden Breakpoint="Breakpoint.SmAndUp" Invert="false">
+                        <MudHidden Breakpoint="Breakpoint.MdAndUp" Invert="false">
+                            <MudMenuItem Link="@Data.LicenseUrl" Target="_blank">License</MudMenuItem>
                             <MudMenuItem @onclick="@CopyToClipboardAsync">Copy install command</MudMenuItem>
                         </MudHidden>
                         <MudMenuItem Link="@Data.SiteUrl" Target="_blank" Disabled="@(Data.SiteUrl == null)">Home page</MudMenuItem>

@@ -12,7 +12,8 @@ namespace OpenMod.Plugins.Models
         string? SiteUrl,
         long TotalDownloads,
         string LatestVersion,
-        IReadOnlyList<string> Tags)
+        IReadOnlyList<string> Tags,
+        string LicenseUrl)
     {
         public Plugin(SearchResult searchResult) : this(
             searchResult.PackageId,
@@ -21,7 +22,8 @@ namespace OpenMod.Plugins.Models
             searchResult.ProjectUrl,
             searchResult.TotalDownloads,
             searchResult.Version,
-            searchResult.Tags)
+            searchResult.Tags,
+            searchResult.LicenseUrl)
         {
         }
 
