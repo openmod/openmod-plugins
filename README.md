@@ -1,6 +1,6 @@
 # openmod-plugins
 
-This repository contains the source code of the [website](https://cyberandrii.github.io/openmod-plugins/) where you can find most of the publicly available [openmod](https://github.com/openmod/openmod) plugins.
+This repository contains the source code of the [website](https://openmod.github.io/openmod-plugins/) where you can find most of the publicly available [openmod](https://github.com/openmod/openmod) plugins.
 It's a user-friendly wrapper of nuget.org.
 
 ## FAQ
