@@ -46,7 +46,7 @@
                 <div style="display: inline-flex;">
                     <MudHidden Breakpoint="Breakpoint.SmAndUp" Invert="true">
                         <MudTooltip Text="Copy install command" Placement="Placement.Top">
-                            <MudIconButton Icon="@Icons.Material.Filled.ContentCopy" @onclick="@CopyToClipboardAsync"/>
+                            <MudButton Style="margin-top: 6px;" @onclick="@CopyToClipboardAsync">Copy install command</MudButton>
                         </MudTooltip>
                     </MudHidden>
                     <MudMenu Icon="@Icons.Material.Filled.MoreVert" Direction="Direction.Bottom" OffsetY="true">
