@@ -30,7 +30,7 @@
       "NuGet.Frameworks.dll": "sha256-enqGb6VMYt0Li5ig6lKKGX4ISXcez86JlWEnHR4j4XI=",
       "NuGet.Versioning.dll": "sha256-ved+HIO8Vwgu8Ji6aGvFgqqNkHAUCi+zWwKdEqEdGSQ=",
       "System.IO.Pipelines.dll": "sha256-qZYTUS+ga7CydtH54fYPbehFCvx3B49I74G8dxreTog=",
-      "OpenMod.Plugins.dll": "sha256-y6+MQLBR2vRAtogmPprwAtfdtkf1hCYhWsAZ3w2GDqY=",
+      "OpenMod.Plugins.dll": "sha256-H+Ix0ZlMvFQ0x\/3bNg2FrPzKUiwVvqHW\/m+PvlaLGN0=",
       "System.Collections.Concurrent.dll": "sha256-INacOh1MWdThf7\/4gADPnlV3YwLE8v415qnEcrQkuQg=",
       "System.Collections.Immutable.dll": "sha256-pEghLg97dE8D4jHTunnWXmI081h0UPo8T4wf\/WROzqs=",
       "System.Collections.NonGeneric.dll": "sha256-s4FvRGGO6D49ZQQCZYrruWP5c90V8i1b+n7utJHL9T0=",
@@ -64,7 +64,7 @@
       "System.Text.Encodings.Web.dll": "sha256-07aGup+AyG3fiQMh\/soX\/keG\/sv\/EFerxmXtuG7+xtk=",
       "System.Text.Json.dll": "sha256-b6zmyARoV0hDYn+e4onNRw0QW0U0xeUzkCkDnKtlJ\/M=",
       "System.Text.RegularExpressions.dll": "sha256-ccVUb8pIm9GdfQgFZnukogFXcIn+KgwXvNUuz6ayZ0A=",
-      "System.Private.CoreLib.dll": "sha256-K38Kbm7vIjLRBwjc85VFjPX\/t8cnBupSRsen+HUInOo="
+      "System.Private.CoreLib.dll": "sha256-MOHqFYQXWgfz19vwg7pocq7iXGAk8BaAa8\/UL+c6A2c="
     },
     "lazyAssembly": null,
     "pdb": null,
