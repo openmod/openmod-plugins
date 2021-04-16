@@ -17,11 +17,6 @@ namespace OpenMod.Plugins.Services
         {
             // Trademark violations
             "VaultPlugin",
-            "F.AntiCosmetics",
-            "F.ItemRestrictions",
-            "F.RustResources",
-            "F.Announcer",
-            "F.RestoreInventory",
         };
 
         private static readonly string[] _authorBlacklist =
