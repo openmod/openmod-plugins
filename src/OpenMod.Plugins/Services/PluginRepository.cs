@@ -18,7 +18,16 @@ namespace OpenMod.Plugins.Services
             // Trademark violations
             "VaultPlugin",
             "F.AntiCosmetics",
-            "F.ItemRestrictions"
+            "F.ItemRestrictions",
+
+            // Test plugins
+            "Bibble.Openmod.Test",
+            "openmod_test",
+            "TestPlugin9270",
+            "SDRPTest",
+            "MyName.MyUnturnedPlugin",
+            "Iravi1.TestingPlugin",
+            "TestingPlugin",
         };
 
         private static readonly string[] _authorBlacklist =
