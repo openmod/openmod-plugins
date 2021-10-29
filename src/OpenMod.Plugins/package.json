@@ -1,0 +1,22 @@
+{
+    "name": "openmod.plugins",
+    "version": "1.0.0",
+    "description": "",
+    "private": true,
+    "main": "index.js",
+    "scripts": {
+        "buildcss": "postcss wwwroot/css/app.css -o wwwroot/css/app.min.css",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [
+        "openmod"
+    ],
+    "author": "openmod",
+    "license": "MIT",
+    "dependencies": {
+        "autoprefixer": "^10.4.0",
+        "postcss": "^8.3.11",
+        "postcss-cli": "^9.0.1",
+        "tailwindcss": "^2.2.19"
+    }
+}

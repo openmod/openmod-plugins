@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+﻿<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
 
     <PropertyGroup>
         <TargetFramework>net6.0</TargetFramework>
@@ -15,5 +15,15 @@
         <PackageReference Include="Microsoft.AspNetCore.WebUtilities" Version="2.2.0" />
         <PackageReference Include="MudBlazor" Version="5.1.2" />
     </ItemGroup>
+
+    <ItemGroup>
+        <UpToDateCheckBuilt Include="wwwroot/css/app.css" Set="Css" />
+        <UpToDateCheckBuilt Include="postcss.config.js" Set="Css" />
+        <UpToDateCheckBuilt Include="tailwind.config.js" Set="Css" />
+    </ItemGroup>
+
+    <Target Name="BuildCSS" AfterTargets="PostBuildEvent">
+        <Exec Command="npm run buildcss" />
+    </Target>
 
 </Project>
