@@ -44,7 +44,7 @@ public class PluginRepository : IPluginRepository
 
         var response = await _searchClient.SearchAsync(query, skip, take, includePrerelease);
 
-        Filter(response, out IReadOnlyList<Plugin> plugins, out long total);
+        Filter(response, out var plugins, out var total);
         return new PluginsResponse(total, plugins);
     }
 

@@ -17,21 +17,21 @@ public class Navigator : INavigator
 
     public void Index()
     {
-        string uri = _uriBuilder.Index();
+        var uri = _uriBuilder.Index();
         _navigationManager.NavigateTo(uri);
     }
 
     public void Search(int? page, string? query)
     {
-        int currentPage = 0;
-        string currentQuery = "";
+        var currentPage = 0;
+        var currentQuery = "";
 
         if (page == null || query == null)
         {
             _queryParser.Search(null, out currentPage, out currentQuery);
         }
 
-        string uri = _uriBuilder.Search(
+        var uri = _uriBuilder.Search(
             page ?? currentPage,
             query ?? currentQuery);
 
