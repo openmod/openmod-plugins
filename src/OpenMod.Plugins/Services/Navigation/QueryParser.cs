@@ -1,22 +1,20 @@
-﻿using Microsoft.AspNetCore.Components;
-using OpenMod.Plugins.Extensions;
+using Microsoft.AspNetCore.Components;
 
-namespace OpenMod.Plugins.Services.Navigation
+namespace OpenMod.Plugins.Services.Navigation;
+
+public class QueryParser : IQueryParser
 {
-    public class QueryParser : IQueryParser
+    private readonly NavigationManager _navigationManager;
+
+    public QueryParser(NavigationManager navigationManager)
     {
-        private readonly NavigationManager _navigationManager;
+        _navigationManager = navigationManager;
+    }
 
-        public QueryParser(NavigationManager navigationManager)
-        {
-            _navigationManager = navigationManager;
-        }
-
-        public void Search(string? uri, out int page, out string query)
-        {
-            uri ??= _navigationManager.Uri;
-            page = _navigationManager.GetQuery<int>(uri, "page");
-            query = _navigationManager.GetQuery<string>(uri, "query", defaultValue: "");
-        }
+    public void Search(string? uri, out int page, out string query)
+    {
+        uri ??= _navigationManager.Uri;
+        page = _navigationManager.GetQuery<int>(uri, "page");
+        query = _navigationManager.GetQuery<string>(uri, "query", defaultValue: "");
     }
 }

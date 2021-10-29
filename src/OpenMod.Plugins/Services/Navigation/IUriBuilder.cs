@@ -1,9 +1,8 @@
-﻿namespace OpenMod.Plugins.Services.Navigation
-{
-    public interface IUriBuilder
-    {
-        string Index();
+namespace OpenMod.Plugins.Services.Navigation;
 
-        string Search(int page, string query);
-    }
+public interface IUriBuilder
+{
+    string Index();
+
+    string Search(int page, string query);
 }

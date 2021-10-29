@@ -1,8 +1,5 @@
-﻿using System.Collections.Generic;
+namespace OpenMod.Plugins.Models;
 
-namespace OpenMod.Plugins.Models
+public record PluginsResponse(long Total, IReadOnlyList<Plugin> Plugins)
 {
-    public record PluginsResponse(long Total, IReadOnlyList<Plugin> Plugins)
-    {
-    }
 }

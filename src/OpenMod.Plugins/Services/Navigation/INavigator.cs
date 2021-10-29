@@ -1,9 +1,8 @@
-﻿namespace OpenMod.Plugins.Services.Navigation
-{
-    public interface INavigator
-    {
-        void Index();
+namespace OpenMod.Plugins.Services.Navigation;
 
-        void Search(int? page, string? query);
-    }
+public interface INavigator
+{
+    void Index();
+
+    void Search(int? page, string? query);
 }

@@ -1,22 +1,19 @@
 <Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
 
     <PropertyGroup>
-        <TargetFramework>net5.0</TargetFramework>
+        <TargetFramework>net6.0</TargetFramework>
         <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
         <WarningsAsErrors>nullable</WarningsAsErrors>
-    </PropertyGroup>
-
-    <PropertyGroup>
         <BlazorEnableTimeZoneSupport>false</BlazorEnableTimeZoneSupport>
     </PropertyGroup>
-    
+
     <ItemGroup>
-        <PackageReference Include="BaGet.Protocol" Version="0.3.0-preview4" />
-        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="5.0.9" />
-        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="5.0.9" PrivateAssets="all" />
+        <PackageReference Include="BaGet.Protocol" Version="0.4.0-preview2" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.0-rc.2.21480.10" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.0-rc.2.21480.10" PrivateAssets="all" />
         <PackageReference Include="Microsoft.AspNetCore.WebUtilities" Version="2.2.0" />
         <PackageReference Include="MudBlazor" Version="5.1.2" />
-        <PackageReference Include="System.Net.Http.Json" Version="6.0.0-preview.7.21377.19" />
     </ItemGroup>
 
 </Project>

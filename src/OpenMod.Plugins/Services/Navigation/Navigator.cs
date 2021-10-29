@@ -1,42 +1,40 @@
-﻿using Microsoft.AspNetCore.Components;
-using OpenMod.Plugins.Extensions;
+using Microsoft.AspNetCore.Components;
 
-namespace OpenMod.Plugins.Services.Navigation
+namespace OpenMod.Plugins.Services.Navigation;
+
+public class Navigator : INavigator
 {
-    public class Navigator : INavigator
+    private readonly NavigationManager _navigationManager;
+    private readonly IQueryParser _queryParser;
+    private readonly IUriBuilder _uriBuilder;
+
+    public Navigator(NavigationManager navigationManager, IQueryParser queryParser, IUriBuilder uriBuilder)
     {
-        private readonly NavigationManager _navigationManager;
-        private readonly IQueryParser _queryParser;
-        private readonly IUriBuilder _uriBuilder;
+        _navigationManager = navigationManager;
+        _queryParser = queryParser;
+        _uriBuilder = uriBuilder;
+    }
 
-        public Navigator(NavigationManager navigationManager, IQueryParser queryParser, IUriBuilder uriBuilder)
+    public void Index()
+    {
+        string uri = _uriBuilder.Index();
+        _navigationManager.NavigateTo(uri);
+    }
+
+    public void Search(int? page, string? query)
+    {
+        int currentPage = 0;
+        string currentQuery = "";
+
+        if (page == null || query == null)
         {
-            _navigationManager = navigationManager;
-            _queryParser = queryParser;
-            _uriBuilder = uriBuilder;
+            _queryParser.Search(null, out currentPage, out currentQuery);
         }
 
-        public void Index()
-        {
-            string uri = _uriBuilder.Index();
-            _navigationManager.NavigateTo(uri);
-        }
+        string uri = _uriBuilder.Search(
+            page ?? currentPage,
+            query ?? currentQuery);
 
-        public void Search(int? page, string? query)
-        {
-            int currentPage = 0;
-            string currentQuery = "";
-
-            if (page == null || query == null)
-            {
-                _queryParser.Search(null, out currentPage, out currentQuery);
-            }
-
-            string uri = _uriBuilder.Search(
-                page ?? currentPage,
-                query ?? currentQuery);
-
-            _navigationManager.NavigateTo(uri);
-        }
+        _navigationManager.NavigateTo(uri);
     }
 }

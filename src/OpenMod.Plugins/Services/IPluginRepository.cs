@@ -1,10 +1,6 @@
-﻿using System.Threading.Tasks;
-using OpenMod.Plugins.Models;
+namespace OpenMod.Plugins.Services;
 
-namespace OpenMod.Plugins.Services
+public interface IPluginRepository
 {
-    public interface IPluginRepository
-    {
-        Task<PluginsResponse> SearchAsync(string query, int skip, int take, bool includePrerelease);
-    }
+    Task<PluginsResponse> SearchAsync(string query, int skip, int take, bool includePrerelease);
 }

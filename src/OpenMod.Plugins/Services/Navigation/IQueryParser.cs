@@ -1,7 +1,6 @@
-﻿namespace OpenMod.Plugins.Services.Navigation
+namespace OpenMod.Plugins.Services.Navigation;
+
+public interface IQueryParser
 {
-    public interface IQueryParser
-    {
-        void Search(string? uri, out int page, out string query);
-    }
+    void Search(string? uri, out int page, out string query);
 }
