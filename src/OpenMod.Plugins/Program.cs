@@ -10,6 +10,10 @@ public class Program
         var builder = WebAssemblyHostBuilder.CreateDefault(args);
         builder.RootComponents.Add<App>("#app");
 
+        var clientFactory = await CreateNuGetClientFactoryAsync();
+
+        builder.Services.AddSingleton<IClientFactory, NuGetClientFactory>(services => clientFactory);
+
         builder.Services.AddScoped(
             sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
@@ -21,5 +25,13 @@ public class Program
         builder.Services.AddScoped<PageTitle.PageTitleState>();
 
         await builder.Build().RunAsync();
+    }
+
+    private static async Task<NuGetClientFactory> CreateNuGetClientFactoryAsync()
+    {
+        var httpClient = new HttpClient(new HttpClientHandler());
+        var serviceIndexUrl = "https://api.nuget.org/v3/index.json";
+
+        return await NuGetClientFactory.CreateAsync(httpClient, serviceIndexUrl);
     }
 }

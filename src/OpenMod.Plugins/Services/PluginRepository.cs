@@ -1,6 +1,3 @@
-using BaGet.Protocol;
-using BaGet.Protocol.Models;
-
 namespace OpenMod.Plugins.Services;
 
 public class PluginRepository : IPluginRepository
@@ -26,17 +23,15 @@ public class PluginRepository : IPluginRepository
         "MyOpenModPlugin",
     };
 
-    private static readonly string[] _authorBlacklist =
+    private static readonly string[] _ownerBlacklist =
     {
         // Trademark violations
         "FPlugins",
     };
 
-    public PluginRepository()
+    public PluginRepository(IClientFactory clientFactory)
     {
-        var httpClient = new HttpClient(new HttpClientHandler());
-        var clientFactory = new NuGetClientFactory(httpClient, "https://api.nuget.org/v3/index.json");
-        _searchClient = clientFactory.CreateSearchClient();
+        _searchClient = clientFactory.GetSearchClient();
     }
 
     public async Task<PluginsResponse> SearchAsync(string query, int skip, int take, bool includePrerelease)
@@ -59,7 +54,9 @@ public class PluginRepository : IPluginRepository
     private static void Filter(SearchResponse searchResponse, out IReadOnlyList<Plugin> plugins, out long total)
     {
         plugins = searchResponse.Data
-            .Where(x => !IsBlacklisted(x) && x.Tags.Contains("openmod-plugin", StringComparer.OrdinalIgnoreCase))
+            .Where(x => !IsBlacklisted(x)
+                && x.Tags != null
+                && x.Tags.Contains("openmod-plugin", StringComparer.OrdinalIgnoreCase))
             .Select(x => new Plugin(x))
             .ToList();
 
@@ -73,7 +70,13 @@ public class PluginRepository : IPluginRepository
             return true;
         }
 
-        if (_authorBlacklist.Any(b => plugin.Authors.Any(x => x.Contains(b, StringComparison.OrdinalIgnoreCase))))
+        if (plugin.Owners == null)
+        {
+            return true;
+        }
+
+        if (_ownerBlacklist
+            .Any(b => plugin.Owners.Any(x => x.Equals(b, StringComparison.OrdinalIgnoreCase))))
         {
             return true;
         }

@@ -9,10 +9,13 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="BaGet.Protocol" Version="0.4.0-preview2" />
         <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.0-rc.2.21480.10" />
         <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.0-rc.2.21480.10" PrivateAssets="all" />
         <PackageReference Include="Microsoft.AspNetCore.WebUtilities" Version="2.2.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\OpenMod.BaGet.Protocol\OpenMod.BaGet.Protocol.csproj" />
     </ItemGroup>
 
     <ItemGroup>

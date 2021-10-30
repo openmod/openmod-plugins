@@ -1,34 +1,30 @@
-using BaGet.Protocol.Models;
-
 namespace OpenMod.Plugins.Models;
 
 public record Plugin(
     string Id,
     string Description,
-    [property: Obsolete("Use Owners instead")] IReadOnlyList<string> Authors,
+    IReadOnlyList<string> Owners,
     string? SiteUrl,
-    long TotalDownloads,
+    long? TotalDownloads,
     string LatestVersion,
     IReadOnlyList<string> Tags,
-    string LicenseUrl)
+    string? LicenseUrl)
 {
     public Plugin(SearchResult searchResult) : this(
         searchResult.PackageId,
-        FixDescription(searchResult.Description),
-        FixAuthors(searchResult.Authors),
+        FixDescription(searchResult.Description ?? ""),
+        searchResult.Owners ?? Array.Empty<string>(),
         searchResult.ProjectUrl,
         searchResult.TotalDownloads,
         searchResult.Version,
-        searchResult.Tags,
+        searchResult.Tags ?? Array.Empty<string>(),
         searchResult.LicenseUrl)
     {
     }
 
-    public IReadOnlyList<string> Owners => Authors;
-
     public bool IsOfficial { get; }
         = Id.StartsWith("OpenMod.", StringComparison.OrdinalIgnoreCase)
-          && Authors.Any(x => x == Id || x.Trim().Equals("OpenMod", StringComparison.OrdinalIgnoreCase));
+          && Owners.Any(x => x == Id || x.Equals("OpenMod", StringComparison.OrdinalIgnoreCase));
 
     public string CommandInstall { get; } = "openmod install " + Id;
 
@@ -37,14 +33,5 @@ public record Plugin(
     private static string FixDescription(string description)
     {
         return description.Trim() == "Package Description" ? "" : description;
-    }
-
-    private static IReadOnlyList<string> FixAuthors(IEnumerable<string> authors)
-    {
-        return authors
-            .SelectMany(x => x
-                .Split(',')
-                .Select(y => y.Trim()))
-            .ToList();
     }
 }

@@ -7,6 +7,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{D3ABCB35-DD7
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenMod.Plugins", "src\OpenMod.Plugins\OpenMod.Plugins.csproj", "{F9CB6E28-5BC3-4599-98E9-8499FEEE0251}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenMod.BaGet.Protocol", "src\OpenMod.BaGet.Protocol\OpenMod.BaGet.Protocol.csproj", "{6F59B42E-4037-46B3-B392-97DE06B9EAC2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,12 +19,17 @@ Global
 		{F9CB6E28-5BC3-4599-98E9-8499FEEE0251}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F9CB6E28-5BC3-4599-98E9-8499FEEE0251}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F9CB6E28-5BC3-4599-98E9-8499FEEE0251}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F59B42E-4037-46B3-B392-97DE06B9EAC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F59B42E-4037-46B3-B392-97DE06B9EAC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F59B42E-4037-46B3-B392-97DE06B9EAC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F59B42E-4037-46B3-B392-97DE06B9EAC2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{F9CB6E28-5BC3-4599-98E9-8499FEEE0251} = {D3ABCB35-DD7B-423B-9DB2-C92DDAD2322A}
+		{6F59B42E-4037-46B3-B392-97DE06B9EAC2} = {D3ABCB35-DD7B-423B-9DB2-C92DDAD2322A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {64A664A1-3264-4DCA-8A77-BEDC3E1EC112}
