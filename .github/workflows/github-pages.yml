@@ -47,6 +47,10 @@ jobs:
       - name: Add .nojekyll file
         run: touch release/wwwroot/.nojekyll
 
+      # css/app.css ===> non-minified file
+      - name: Create .gitignore
+        run: echo 'css/app.css' > .gitignore
+
       - name: Deploy to GitHub Pages
         if: github.event_name == 'push'
         uses: JamesIves/github-pages-deploy-action@releases/v4
