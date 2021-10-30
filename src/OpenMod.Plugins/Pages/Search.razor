@@ -6,38 +6,25 @@
 @inject IUriBuilder UriBuilder
 @inject NavigationManager NavigationManager
 @inject IPluginRepository PluginRepository
+@inject OpenMod.Plugins.Shared.PageTitle.PageTitleState PageTitleState
 
-@if (_pluginsResponce == null)
+@if (_pluginsResponce != null)
 {
-    <MudProgressLinear Color="Color.Primary" Indeterminate="true"/>
-}
-else
-{
-    <MudText Typo="Typo.h4">
-        @(string.IsNullOrEmpty(_searchQuery)
-            ? _pluginsResponce.Total == 1 ? "There is 1 plugin" : $"There are {_pluginsResponce.Total:n0} plugins"
-            : (_pluginsResponce.Total == 1 ? "1 plugin" : $"{_pluginsResponce.Total:n0} plugins") + " returned for " + _searchQuery)
-    </MudText>
-    <br>
-    <br>
-    <MudGrid>
-        @if (_currentPage > 0 && _pluginsResponce.Total > 0 && _pluginsResponce.Plugins.Count == 0)
+    @if (_currentPage > 0 && _pluginsResponce.Total > 0 && _pluginsResponce.Plugins.Count == 0)
+    {
+        <p>No plugins found on this page.</p>
+    }
+    else
+    {
+        foreach (var plugin in _pluginsResponce.Plugins)
         {
-            <MudAlert Severity="Severity.Error" Variant="Variant.Text" Style="width: inherit;">No plugins found on this page.</MudAlert>
+            <PluginItem Plugin=plugin />
         }
-        else
-        {
-            foreach (var plugin in _pluginsResponce.Plugins)
-            {
-                <PluginCard Data="@plugin"/>
-            }
-        }
-    </MudGrid>
-    <SearchPageNavigation PreviousPageLink="@_previousPageLink" NextPageLink="@_nextPageLink"/>
+    }
 }
 
-@code {
-
+@code
+{
     private PluginsResponse? _pluginsResponce;
     private string? _previousPageLink;
     private string? _nextPageLink;
@@ -46,7 +33,12 @@ else
 
     protected override async Task OnInitializedAsync()
     {
+        PageTitleState.Title = "Loading...";
+
         await LoadPluginsAsync();
+
+        PageTitleState.Title = _pluginsResponce!.Total + " plugins found";
+
         NavigationManager.LocationChanged += HandleLocationChanged;
     }
 
@@ -59,7 +51,8 @@ else
     {
         QueryParser.Search(null, out _currentPage, out _searchQuery);
 
-        int pageSize = 20;
+        // todo: add pagination
+        int pageSize = 500;
 
         _pluginsResponce = await PluginRepository.SearchAsync(
             query: _searchQuery,
@@ -67,7 +60,7 @@ else
             take: pageSize,
             includePrerelease: false);
 
-        int lastPage = (int) ((_pluginsResponce.Total + pageSize - 1) / pageSize) - 1;
+        int lastPage = (int)((_pluginsResponce.Total + pageSize - 1) / pageSize) - 1;
         int previousPage = _currentPage > lastPage ? lastPage : _currentPage - 1;
         int nextPage = _currentPage + 1;
 

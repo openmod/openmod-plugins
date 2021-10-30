@@ -5,7 +5,7 @@ namespace OpenMod.Plugins.Models;
 public record Plugin(
     string Id,
     string Description,
-    IReadOnlyList<string> Authors,
+    [property: Obsolete("Use Owners instead")] IReadOnlyList<string> Authors,
     string? SiteUrl,
     long TotalDownloads,
     string LatestVersion,
@@ -23,6 +23,8 @@ public record Plugin(
         searchResult.LicenseUrl)
     {
     }
+
+    public IReadOnlyList<string> Owners => Authors;
 
     public bool IsOfficial { get; }
         = Id.StartsWith("OpenMod.", StringComparison.OrdinalIgnoreCase)

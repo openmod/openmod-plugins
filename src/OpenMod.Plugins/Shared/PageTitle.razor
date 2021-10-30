@@ -1,0 +1,46 @@
+﻿@implements IDisposable
+
+@inject PageTitleState State
+
+@if (State.Title != null)
+{
+    <div class="w-full text-xl font-semibold bg-gray-100 border-b border-gray-200">
+        <div class="ml-3">
+            <div class="md:max-w-7xl mx-auto py-6">
+                @State.Title
+            </div>
+        </div>
+    </div>
+}
+
+@code
+{
+    public class PageTitleState
+    {
+        private string? _title;
+
+        public string? Title
+        {
+            get => _title;
+            set
+            {
+                _title = value;
+                NotifyStateChanged();
+            }
+        }
+
+        public event Action? OnChange;
+
+        private void NotifyStateChanged() => OnChange?.Invoke();
+    }
+
+    protected override void OnInitialized()
+    {
+        State.OnChange += StateHasChanged;
+    }
+
+    public void Dispose()
+    {
+        State.OnChange -= StateHasChanged;
+    }
+}

@@ -1,0 +1,24 @@
+﻿<article class="py-4 border-b border-gray-200">
+    <h2 class="inline-block text-lg font-semibold leading-none text-black cursor-pointer hover:text-primary-600">
+        @Plugin.Id
+    </h2>
+
+    <div class="text-base font-normal text-gray-500">
+        <p class="mt-1 w-full">@Plugin.Description</p>
+        <p class="flex mt-2 w-full text-sm font-normal">
+            <!-- todo: display every owner's icon (not just first like now) -->
+            <img :src="`https://www.nuget.org/profiles/${owners[0]}/avatar?imageSize=64`" alt="" class="mr-2 w-5 h-5" />
+            <span class="font-medium text-gray-900">@string.Join(", ", Plugin.Owners)</span>
+            <span class="mx-2">·</span>
+            <span>@("v" + Plugin.LatestVersion)</span>
+            <span class="mx-2">·</span>
+            <span>@Plugin.TotalDownloads downloads</span>
+        </p>
+    </div>
+</article>
+
+@code
+{
+    [Parameter]
+    public Plugin Plugin { get; set; } = null!;
+}

@@ -4,45 +4,33 @@
 @inject NavigationManager NavigationManager
 @inject IQueryParser QueryParser
 
-<div>
-    <MudAppBar Fixed="false">
-        <MudHidden Breakpoint="Breakpoint.SmAndUp" Invert="true">
-            <MudText Typo="Typo.h5" @onclick="@Navigator.Index" Class="brand-text">OpenMod Plugins</MudText>
-        </MudHidden>
-        <MudAppBarSpacer/>
-        <MudItem xs="12" sm="6" md="4">
-            <MudTextField @bind-Value="@SearchQuery"
-                           Placeholder="Search"
-                           Variant="Variant.Outlined"
-                           Adornment="Adornment.End"
-                           AdornmentIcon="@Icons.Filled.Search"
-                           OnAdornmentClick="@(() => Navigator.Search(page: 0, query: SearchQuery))"
-                           OnKeyDown="@SearchFieldKeyDownEventHandler"
-                           Immediate="true"
-                           DisableUnderLine="true"
-                           Class="search-bar"/>
-        </MudItem>
-        <MudAppBarSpacer/>
-        <MudHidden Breakpoint="Breakpoint.MdAndUp" Invert="true">
-            <MudButton Link="https://github.com/openmod/openmod" Target="_blank" Color="Color.Inherit">Get OpenMod</MudButton>
-            <MudDivider Vertical="true" FlexItem="true" DividerType="DividerType.Middle" Class="mx-4 my-5"/>
-            <MudTooltip Text="Toggle light/dark theme" Placement="Placement.Start">
-                <MudIconButton OnClick="@OnThemeRotateRequest" Icon="@Icons.Material.Filled.Brightness4" Color="Color.Inherit"/>
-            </MudTooltip>
-        </MudHidden>
-        <MudHidden Breakpoint="Breakpoint.MdAndUp" Invert="false">
-            <MudMenu Icon="@Icons.Filled.KeyboardArrowDown" Direction="Direction.Right" OffsetY="true" Color="Color.Inherit">
-                <MudMenuItem Link="https://github.com/openmod/openmod" Target="_blank">Get OpenMod</MudMenuItem>
-                <MudMenuItem OnClick="@OnThemeRotateRequest">Toggle light/dark theme</MudMenuItem>
-            </MudMenu>
-        </MudHidden>
-    </MudAppBar>
-</div>
+<nav class="w-full border-b border-gray-200">
+    <div class="ml-3">
+        <div class="w-full md:max-w-7xl mx-auto flex flex-wrap items-center justify-between mt-0 py-3">
+
+            <a href="#" class="text-gray-900 no-underline hover:no-underline font-bold text-3xl">
+                OpenMod
+            </a>
+
+            <div class="w-full flex-grow sm:flex sm:items-center sm:w-auto">
+                <ul class="text-gray-900 font-bold no-underline list-reset sm:flex pt-3 sm:pt-0 justify-end flex-1 items-center">
+                    <li class="mr-1">
+                        <a href="https://discord.gg/dXkJtb5yKJ" target="_blank" class="inline-block py-2 px-4 hover:text-gray-400 transition-all">Discord</a>
+                    </li>
+                    <li class="mr-1">
+                        <a href="https://github.com/openmod/openmod" target="_blank" class="inline-block py-2 px-4 hover:text-gray-400 transition-all">GitHub</a>
+                    </li>
+                    <li class="mr-1">
+                        <a href="https://openmod.github.io/openmod-docs/" target="_blank" class="inline-block py-2 px-4 hover:text-gray-400 transition-all">Documentation</a>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+</nav>
 
 @code {
-
-    [Parameter]
-    public EventCallback OnThemeRotateRequest { get; set; }
 
     public string SearchQuery { get; set; } = string.Empty;
 

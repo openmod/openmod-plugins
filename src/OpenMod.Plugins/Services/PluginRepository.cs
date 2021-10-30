@@ -9,26 +9,28 @@ public class PluginRepository : IPluginRepository
 
     private static readonly string[] _packageBlacklist =
     {
-            // Trademark violations
-            "VaultPlugin",
-            "F.AntiCosmetics",
-            "F.ItemRestrictions",
+        // Trademark violations
+        "VaultPlugin",
+        "F.AntiCosmetics",
+        "F.ItemRestrictions",
 
-            // Test plugins
-            "Bibble.Openmod.Test",
-            "openmod_test",
-            "TestPlugin9270",
-            "SDRPTest",
-            "MyName.MyUnturnedPlugin",
-            "Iravi1.TestingPlugin",
-            "TestingPlugin",
-        };
+        // Test plugins
+        "Bibble.Openmod.Test",
+        "openmod_test",
+        "TestPlugin9270",
+        "SDRPTest",
+        "MyName.MyUnturnedPlugin",
+        "Iravi1.TestingPlugin",
+        "TestingPlugin",
+        "MyPlugin",
+        "MyOpenModPlugin",
+    };
 
     private static readonly string[] _authorBlacklist =
     {
-            // Trademark violations
-            "FPlugins",
-        };
+        // Trademark violations
+        "FPlugins",
+    };
 
     public PluginRepository()
     {
@@ -42,10 +44,16 @@ public class PluginRepository : IPluginRepository
         query = query.Replace("tags:", "", StringComparison.OrdinalIgnoreCase);
         query += " Tags:\"openmod-plugin\"";
 
-        var response = await _searchClient.SearchAsync(query, skip, take, includePrerelease);
+        var response = await _searchClient.SearchAsync(query, 0, 1000, includePrerelease);
 
         Filter(response, out var plugins, out var total);
-        return new PluginsResponse(total, plugins);
+
+        var pluginsRange = plugins
+            .Skip(skip)
+            .Take(take)
+            .ToList();
+
+        return new PluginsResponse(total, pluginsRange);
     }
 
     private static void Filter(SearchResponse searchResponse, out IReadOnlyList<Plugin> plugins, out long total)
@@ -60,14 +68,12 @@ public class PluginRepository : IPluginRepository
 
     private static bool IsBlacklisted(SearchResult plugin)
     {
-        if (_packageBlacklist
-            .Any(b => plugin.PackageId.Trim().Equals(b, StringComparison.OrdinalIgnoreCase)))
+        if (_packageBlacklist.Any(b => plugin.PackageId.Trim().Equals(b, StringComparison.OrdinalIgnoreCase)))
         {
             return true;
         }
 
-        if (_authorBlacklist
-            .Any(b => plugin.Authors.Any(x => x.Contains(b, StringComparison.OrdinalIgnoreCase))))
+        if (_authorBlacklist.Any(b => plugin.Authors.Any(x => x.Contains(b, StringComparison.OrdinalIgnoreCase))))
         {
             return true;
         }

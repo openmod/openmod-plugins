@@ -1,18 +1,11 @@
 ﻿@inherits LayoutComponentBase
 
-<MudThemeProvider Theme="@_currentTheme"/>
-<MudDialogProvider/>
-<MudSnackbarProvider/>
+<div class="font-sans antialiased">
+    <NavBar />
 
-<MudLayout>
-    <NavBar OnThemeRotateRequest="@RotateTheme"/>
+    <OpenMod.Plugins.Shared.PageTitle />
 
-    <MudMainContent>
-        <MudContainer>
-            @Body
-        </MudContainer>
-        <MudScrollToTop TopOffset="400">
-            <MudFab Icon="@Icons.Material.Filled.KeyboardArrowUp" Color="Color.Primary"/>
-        </MudScrollToTop>
-    </MudMainContent>
-</MudLayout>
+    <div class="px-3 mx-auto mb-8 w-full max-w-7xl">
+        @Body
+    </div>
+</div>

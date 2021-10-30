@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
-using MudBlazor;
-using MudBlazor.Services;
+using OpenMod.Plugins.Shared;
 
 namespace OpenMod.Plugins;
 
@@ -19,19 +18,7 @@ public class Program
         builder.Services.AddSingleton<IUriBuilder, OpenMod.Plugins.Services.Navigation.UriBuilder>();
         builder.Services.AddSingleton<IPluginRepository, PluginRepository>();
 
-        builder.Services.AddMudBlazorSnackbar(config =>
-        {
-            config.PositionClass = Defaults.Classes.Position.TopRight;
-            config.PreventDuplicates = false;
-            config.NewestOnTop = false;
-            config.ShowCloseIcon = true;
-            config.VisibleStateDuration = 5000;
-            config.HideTransitionDuration = 500;
-            config.ShowTransitionDuration = 300;
-            config.SnackbarVariant = Variant.Filled;
-            config.MaxDisplayedSnackbars = 7;
-        });
-        builder.Services.AddMudServices();
+        builder.Services.AddScoped<PageTitle.PageTitleState>();
 
         await builder.Build().RunAsync();
     }
