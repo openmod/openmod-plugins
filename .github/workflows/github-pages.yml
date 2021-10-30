@@ -1,4 +1,4 @@
-﻿name: GitHub Pages
+name: GitHub Pages
 
 on:
   pull_request:
@@ -26,6 +26,7 @@ jobs:
           node-version: 16
 
       - run: npm install
+        working-directory: src/OpenMod.Plugins
 
       - name: Publish with dotnet
         run: dotnet publish --configuration Release --output release
