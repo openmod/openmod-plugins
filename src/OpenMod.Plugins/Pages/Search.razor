@@ -10,16 +10,9 @@
 
 @if (_pluginsResponce != null)
 {
-    @if (_currentPage > 0 && _pluginsResponce.Total > 0 && _pluginsResponce.Plugins.Count == 0)
+    foreach (var plugin in _pluginsResponce.Plugins)
     {
-        <p>No plugins found on this page.</p>
-    }
-    else
-    {
-        foreach (var plugin in _pluginsResponce.Plugins)
-        {
-            <PluginItem Plugin=plugin />
-        }
+        <PluginItem Plugin=plugin />
     }
 }
 
@@ -76,5 +69,4 @@
         await LoadPluginsAsync();
         StateHasChanged();
     }
-
 }
