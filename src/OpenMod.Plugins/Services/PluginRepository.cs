@@ -72,7 +72,7 @@ public class PluginRepository : IPluginRepository
         return response.Plugins.FirstOrDefault(p => p.Id.Equals(id, StringComparison.OrdinalIgnoreCase));
     }
 
-    public async Task<string> GetMarkdownAsync(Plugin plugin, CancellationToken cancellationToken = default)
+    public async Task<string?> GetMarkdownAsync(Plugin plugin, CancellationToken cancellationToken = default)
     {
         // https://github.com/NuGet/NuGetGallery/issues/8732#issuecomment-892953185
         var uri = @$"https://api.nuget.org/v3-flatcontainer/{plugin.Id.ToLowerInvariant()}/{plugin.Version}/readme";
@@ -81,7 +81,7 @@ public class PluginRepository : IPluginRepository
 
         if (!responce.IsSuccessStatusCode)
         {
-            return "";
+            return null;
         }
 
         return await responce.Content.ReadAsStringAsync(cancellationToken);

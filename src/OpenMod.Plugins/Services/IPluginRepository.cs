@@ -6,5 +6,5 @@ public interface IPluginRepository
 
     Task<Plugin?> GetPluginAsync(string id, CancellationToken cancellationToken = default);
 
-    Task<string> GetMarkdownAsync(Plugin plugin, CancellationToken cancellationToken = default);
+    Task<string?> GetMarkdownAsync(Plugin plugin, CancellationToken cancellationToken = default);
 }

@@ -24,6 +24,7 @@ public class Program
         builder.Services.AddSingleton<IPluginRepository, PluginRepository>();
         builder.Services.AddSingleton<IMarkdownService, MarkdownService>();
         builder.Services.AddSingleton<IClipboardService, ClipboardService>();
+        builder.Services.AddSingleton<IGitHubRepository, GitHubRepository>();
 
         builder.Services.AddScoped<OpenMod.Plugins.Shared.PageTitle.PageTitleState>();
 

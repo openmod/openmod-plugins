@@ -4,6 +4,7 @@
 @inject IUriBuilder UriBuilder
 @inject NavigationManager NavigationManager
 @inject IPluginRepository PluginRepository
+@inject IGitHubRepository GitHubRepository
 @inject IClipboardService ClipboardService
 @inject OpenMod.Plugins.Shared.PageTitle.PageTitleState PageTitleState
 
@@ -95,26 +96,32 @@
     </div>
 
     <div class="lg:col-span-3 order-first">
-        @if (_plugin != null && string.IsNullOrWhiteSpace(_markdown))
+        @if (_pluginWasNotFound)
         {
-            <p>
-                @if (!string.IsNullOrWhiteSpace(_plugin.Description))
-                {
-                    @_plugin.Description
-                }
-                else if (!string.IsNullOrWhiteSpace(_plugin.Summary))
-                {
-                    @_plugin.Summary
-                }
-                else
-                {
-                    @("Description was not provided.")
-                }
-            </p>
+            <p>Plugin was not found.</p>
+        }
+        else if (_triedLoadingMarkdown && _plugin != null)
+        {
+            if (!string.IsNullOrWhiteSpace(_markdown))
+            {
+                <Markdown Text=@_markdown />
+            }
+            else if (!string.IsNullOrWhiteSpace(_plugin.Description))
+            {
+                <p>@_plugin.Description</p>
+            }
+            else if (!string.IsNullOrWhiteSpace(_plugin.Summary))
+            {
+                <p>@_plugin.Summary</p>
+            }
+            else
+            {
+                <p>Description was not provided.</p>
+            }
         }
         else
         {
-            <Markdown Text=@_markdown />
+            <p>Loading...</p>
         }
     </div>
 </div>
@@ -122,7 +129,9 @@
 @code
 {
     private OpenMod.Plugins.Models.Plugin? _plugin;
+    private bool _pluginWasNotFound;
     private string? _markdown;
+    private bool _triedLoadingMarkdown;
 
     private string GetInstallCommand()
         => string.Format("om install {0}@{1}", _plugin!.Id, _plugin!.Version);
@@ -132,13 +141,11 @@
 
     protected override async Task OnInitializedAsync()
     {
-        PageTitleState.Title = "Loading...";
-
         await LoadPluginAsync();
 
         if (_plugin == null)
         {
-            PageTitleState.Title = "Plugin was not found";
+            _pluginWasNotFound = true;
             return;
         }
 
@@ -150,6 +157,8 @@
     private async Task LoadPluginAsync()
     {
         QueryParser.Plugin(null, out var id);
+
+        PageTitleState.Title = id;
 
         if (id == null)
         {
@@ -169,5 +178,19 @@
         }
 
         _markdown = await PluginRepository.GetMarkdownAsync(_plugin!);
+
+        if (!string.IsNullOrWhiteSpace(_markdown))
+        {
+            _triedLoadingMarkdown = true;
+            return;
+        }
+
+        if (!string.IsNullOrWhiteSpace(_plugin.ProjectUrl) && _plugin.ProjectUrl.StartsWith("https://github.com/"))
+        {
+            _markdown = await GitHubRepository.GetReadmeAsync(_plugin.ProjectUrl, "main")
+                ?? await GitHubRepository.GetReadmeAsync(_plugin.ProjectUrl, "master");
+        }
+
+        _triedLoadingMarkdown = true;
     }
 }
