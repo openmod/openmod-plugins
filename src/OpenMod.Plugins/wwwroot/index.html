@@ -15,39 +15,73 @@
 <body>
     <div id="app">
         <style>
-            html,
-            body {
-                height: 100%;
-                margin: 0;
+            .loader {
+                color: #000000;
+                text-indent: -9999em;
+                margin: 88px auto;
+                position: relative;
+                font-size: 11px;
+                -webkit-transform: translateZ(0);
+                -ms-transform: translateZ(0);
+                transform: translateZ(0);
+                -webkit-animation-delay: -0.16s;
+                animation-delay: -0.16s;
             }
 
-            * {
-                box-sizing: border-box;
+                .loader,
+                .loader:before,
+                .loader:after {
+                    background: #000000;
+                    -webkit-animation: load1 1s infinite ease-in-out;
+                    animation: load1 1s infinite ease-in-out;
+                    width: 1em;
+                    height: 4em;
+                }
+
+                    .loader:before, .loader:after {
+                        position: absolute;
+                        top: 0;
+                        content: '';
+                    }
+
+                    .loader:before {
+                        left: -1.5em;
+                        -webkit-animation-delay: -0.32s;
+                        animation-delay: -0.32s;
+                    }
+
+                    .loader:after {
+                        left: 1.5em;
+                    }
+
+            @-webkit-keyframes load1 {
+                0%, 80%, 100% {
+                    box-shadow: 0 0;
+                    height: 4em;
+                }
+
+                40% {
+                    box-shadow: 0 -2em;
+                    height: 5em;
+                }
             }
 
-            body {
-                text-align: center;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                background: #f5f5f5;
-            }
+            @keyframes load1 {
+                0%, 80%, 100% {
+                    box-shadow: 0 0;
+                    height: 4em;
+                }
 
-            svg {
-                width: 120px;
-                height: auto;
+                40% {
+                    box-shadow: 0 -2em;
+                    height: 5em;
+                }
             }
         </style>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="25 25 50 50">
-            <circle cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke="#594ae2" stroke-linecap="round"
-                    stroke-dashoffset="0" stroke-dasharray="100, 200">
-                <animateTransform attributeName="transform" attributeType="XML" type="rotate" from="0 50 50" to="360 50 50"
-                                  dur="2.5s" repeatCount="indefinite" />
-                <animate attributeName="stroke-dashoffset" values="0;-30;-124" dur="1.25s" repeatCount="indefinite" />
-                <animate attributeName="stroke-dasharray" values="0,200;110,200;110,200" dur="1.25s"
-                         repeatCount="indefinite" />
-            </circle>
-        </svg>
+
+        <div class="loader">
+            Loading...
+        </div>
     </div>
 
     <!-- Start Single Page Apps for GitHub Pages -->
