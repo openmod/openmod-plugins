@@ -13,7 +13,6 @@ public class MarkdownService : IMarkdownService
             .UsePipeTables()
             .UseListExtras()
             .UseTaskLists()
-            .UseSoftlineBreakAsHardlineBreak()
             .UseEmojiAndSmiley()
             .UseAutoLinks()
             .UseReferralLinks("noopener noreferrer nofollow")
