@@ -41,6 +41,7 @@ jobs:
       - name: Create static pages
         run: |
           cp release/wwwroot/404.html release/wwwroot/search.html
+          cp release/wwwroot/404.html release/wwwroot/plugin.html
 
       # Add .nojekyll file to tell GitHub Pages to not treat this as a Jekyll project
       # Allows files and folders starting with an underscore

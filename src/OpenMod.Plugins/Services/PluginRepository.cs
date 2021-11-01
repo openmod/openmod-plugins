@@ -2,7 +2,9 @@ namespace OpenMod.Plugins.Services;
 
 public class PluginRepository : IPluginRepository
 {
+    private readonly Cache<PluginsResponse> _searchCache;
     private readonly ISearchClient _searchClient;
+    private readonly HttpClient _httpClient;
 
     private static readonly string[] _packageBlacklist =
     {
@@ -29,26 +31,60 @@ public class PluginRepository : IPluginRepository
         "FPlugins",
     };
 
-    public PluginRepository(IClientFactory clientFactory)
+    public PluginRepository(IClientFactory clientFactory, HttpClient httpClient)
     {
+        _searchCache = new Cache<PluginsResponse>(TimeSpan.FromMinutes(5), SearchAsyncInternal);
         _searchClient = clientFactory.GetSearchClient();
+        _httpClient = httpClient;
     }
 
-    public async Task<PluginsResponse> SearchAsync(string query, int skip, int take, bool includePrerelease)
+    public async Task<PluginsResponse> SearchAsync(string query, int skip, int take, CancellationToken cancellationToken = default)
     {
-        query = query.Replace("tags:", "", StringComparison.OrdinalIgnoreCase);
-        query += " Tags:\"openmod-plugin\"";
+        var value = await _searchCache.GetValueAsync(cancellationToken);
 
-        var response = await _searchClient.SearchAsync(query, 0, 1000, includePrerelease);
+        query = query.Trim();
+
+        var pluginsFiltered = value.Plugins
+            .Skip(skip)
+            .Take(take);
+
+        if (!string.IsNullOrWhiteSpace(query))
+        {
+            pluginsFiltered = pluginsFiltered.Where(p => p.Id.Contains(query, StringComparison.OrdinalIgnoreCase));
+        }
+
+        return new PluginsResponse(value.Total, pluginsFiltered.ToList());
+    }
+
+    private async Task<PluginsResponse> SearchAsyncInternal(CancellationToken cancellationToken = default)
+    {
+        var response = await _searchClient.SearchAsync("Tags:\"openmod-plugin\"", 0, 1000, cancellationToken: cancellationToken);
 
         Filter(response, out var plugins, out var total);
 
-        var pluginsRange = plugins
-            .Skip(skip)
-            .Take(take)
-            .ToList();
+        return new PluginsResponse(total, plugins);
+    }
 
-        return new PluginsResponse(total, pluginsRange);
+    public async Task<Plugin?> GetPluginAsync(string id, CancellationToken cancellationToken = default)
+    {
+        var response = await _searchCache.GetValueAsync(cancellationToken);
+
+        return response.Plugins.FirstOrDefault(p => p.Id.Equals(id, StringComparison.OrdinalIgnoreCase));
+    }
+
+    public async Task<string> GetMarkdownAsync(Plugin plugin, CancellationToken cancellationToken = default)
+    {
+        // https://github.com/NuGet/NuGetGallery/issues/8732#issuecomment-892953185
+        var uri = @$"https://api.nuget.org/v3-flatcontainer/{plugin.Id.ToLowerInvariant()}/{plugin.Version}/readme";
+
+        var responce = await _httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Get, uri), cancellationToken);
+
+        if (!responce.IsSuccessStatusCode)
+        {
+            return "";
+        }
+
+        return await responce.Content.ReadAsStringAsync(cancellationToken);
     }
 
     private static void Filter(SearchResponse searchResponse, out IReadOnlyList<Plugin> plugins, out long total)
@@ -75,8 +111,7 @@ public class PluginRepository : IPluginRepository
             return true;
         }
 
-        if (_ownerBlacklist
-            .Any(b => plugin.Owners.Any(x => x.Equals(b, StringComparison.OrdinalIgnoreCase))))
+        if (_ownerBlacklist.Any(b => plugin.Owners.Any(x => x.Equals(b, StringComparison.OrdinalIgnoreCase))))
         {
             return true;
         }

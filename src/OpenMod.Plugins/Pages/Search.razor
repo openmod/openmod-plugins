@@ -8,6 +8,8 @@
 @inject IPluginRepository PluginRepository
 @inject OpenMod.Plugins.Shared.PageTitle.PageTitleState PageTitleState
 
+<Microsoft.AspNetCore.Components.Web.PageTitle>Search</Microsoft.AspNetCore.Components.Web.PageTitle>
+
 @if (_pluginsResponce != null)
 {
     foreach (var plugin in _pluginsResponce.Plugins)
@@ -50,8 +52,7 @@
         _pluginsResponce = await PluginRepository.SearchAsync(
             query: _searchQuery,
             skip: _currentPage * pageSize,
-            take: pageSize,
-            includePrerelease: false);
+            take: pageSize);
 
         int lastPage = (int)((_pluginsResponce.Total + pageSize - 1) / pageSize) - 1;
         int previousPage = _currentPage > lastPage ? lastPage : _currentPage - 1;

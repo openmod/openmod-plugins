@@ -1,7 +1,10 @@
-﻿<article class="py-4 border-b border-gray-200">
-    <h2 class="inline-block text-lg font-semibold leading-none cursor-pointer text-black hover:text-red-600 transition-all">
+﻿@inject IUriBuilder UriBuilder
+
+<article class="py-4 border-b border-gray-200">
+    <a href="@UriBuilder.Plugin(Plugin.Id)"
+       class="inline-block text-lg font-semibold leading-none cursor-pointer text-black hover:text-red-600 transition-all">
         @Plugin.Id
-    </h2>
+    </a>
 
     <div class="text-base font-normal text-gray-500">
         <p class="mt-1 w-full">@Plugin.Description</p>
@@ -16,9 +19,12 @@
 
             <!-- wrapped in the div for better wrapping -->
             <div>
-                <span>@("v" + Plugin.LatestVersion)</span>
-                <span class="mx-1">·</span>
-                <span>@string.Format("{0:n0} downloads", Plugin.TotalDownloads)</span>
+                <span>@("v" + Plugin.Version)</span>
+                @if (Plugin.TotalDownloads != null)
+                {
+                    <span class="mx-1">·</span>
+                    <span>@string.Format("{0:n0} downloads", Plugin.TotalDownloads)</span>
+                }
             </div>
         </p>
     </div>
@@ -27,5 +33,5 @@
 @code
 {
     [Parameter]
-    public Plugin Plugin { get; set; } = null!;
+    public OpenMod.Plugins.Models.Plugin Plugin { get; set; } = null!;
 }

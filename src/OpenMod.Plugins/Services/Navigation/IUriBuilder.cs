@@ -5,4 +5,6 @@ public interface IUriBuilder
     string Index();
 
     string Search(int page, string query);
+
+    string Plugin(string id);
 }

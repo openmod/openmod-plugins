@@ -14,6 +14,7 @@
     "author": "openmod",
     "license": "MIT",
     "dependencies": {
+        "@tailwindcss/typography": "^0.4.1",
         "autoprefixer": "^10.4.0",
         "postcss": "^8.3.11",
         "postcss-cli": "^9.0.1",

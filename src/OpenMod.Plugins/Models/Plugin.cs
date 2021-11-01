@@ -3,16 +3,18 @@ namespace OpenMod.Plugins.Models;
 public record Plugin(
     string Id,
     string Description,
+    string Summary,
     IReadOnlyList<string> Owners,
-    string? SiteUrl,
+    string? ProjectUrl,
     long? TotalDownloads,
-    string LatestVersion,
+    string Version,
     IReadOnlyList<string> Tags,
     string? LicenseUrl)
 {
     public Plugin(SearchResult searchResult) : this(
         searchResult.PackageId,
         FixDescription(searchResult.Description ?? ""),
+        FixDescription(searchResult.Summary ?? ""),
         searchResult.Owners ?? Array.Empty<string>(),
         searchResult.ProjectUrl,
         searchResult.TotalDownloads,

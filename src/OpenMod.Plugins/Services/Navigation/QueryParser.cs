@@ -17,4 +17,10 @@ public class QueryParser : IQueryParser
         page = _navigationManager.GetQuery<int>(uri, "page");
         query = _navigationManager.GetQuery<string>(uri, "query", defaultValue: "");
     }
+
+    public void Plugin(string? uri, out string? id)
+    {
+        uri ??= _navigationManager.Uri;
+        id = _navigationManager.GetQuery<string?>(uri, "id", defaultValue: null);
+    }
 }

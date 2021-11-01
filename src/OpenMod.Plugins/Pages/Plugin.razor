@@ -1,0 +1,173 @@
+﻿@page "/plugin"
+
+@inject IQueryParser QueryParser
+@inject IUriBuilder UriBuilder
+@inject NavigationManager NavigationManager
+@inject IPluginRepository PluginRepository
+@inject IClipboardService ClipboardService
+@inject OpenMod.Plugins.Shared.PageTitle.PageTitleState PageTitleState
+
+@if (_plugin != null)
+{
+    <Microsoft.AspNetCore.Components.Web.PageTitle>@_plugin.Id</Microsoft.AspNetCore.Components.Web.PageTitle>
+
+    @if (!string.IsNullOrWhiteSpace(_plugin.Description))
+    {
+        <HeadContent>
+            <meta name="description" content="@_plugin.Description">
+        </HeadContent>
+    }
+}
+
+<div class="lg:grid lg:grid-cols-4 gap-x-8 lg:my-6">
+    <div class="lg:col-span-1 mb-10 sticky">
+        @if (_plugin != null)
+        {
+            <div class="py-1">
+                <span class="my-2 block font-medium text-gray-500">
+                    Install
+                </span>
+                <span class="my-2 p-2 block w-full hover:bg-green-100 border border-gray-300 transition-all select-none whitespace-nowrap overflow-ellipsis overflow-hidden" @onclick="@(() => ClipboardService.CopyToClipboardAsync(GetInstallCommand()))">
+                    @GetInstallCommand()
+                </span>
+            </div>
+
+            @if (_plugin.TotalDownloads != null)
+            {
+                <div class="py-1">
+                    <span class="my-2 block font-medium text-gray-500">
+                        Total downloads
+                    </span>
+                    <span class="my-2 block font-medium text-black whitespace-nowrap overflow-ellipsis overflow-hidden">
+                        @string.Format("{0:n0}", _plugin.TotalDownloads)
+                    </span>
+                </div>
+            }
+
+            <div class="py-1">
+                <span class="my-2 block font-medium text-gray-500">
+                    Version
+                </span>
+                <span class="my-2 block font-medium text-black whitespace-nowrap overflow-ellipsis overflow-hidden">
+                    @($"v{_plugin.Version}")
+                </span>
+            </div>
+
+            @if (!string.IsNullOrWhiteSpace(_plugin.ProjectUrl))
+            {
+                <div class="py-1">
+                    <span class="my-2 block font-medium text-gray-500">
+                        Project website
+                    </span>
+                    <a href=@_plugin.ProjectUrl class="my-2 block font-medium text-black hover:underline whitespace-nowrap overflow-ellipsis overflow-hidden">
+                        @_plugin.ProjectUrl.TrimStart("https://")
+                    </a>
+                </div>
+            }
+
+            <div class="py-1">
+                <span class="my-2 block font-medium text-gray-500">
+                    NuGet page
+                </span>
+                <a href=@GetNuGetPage() class="my-2 block font-medium text-black hover:underline whitespace-nowrap overflow-ellipsis overflow-hidden">
+                    @GetNuGetPage().TrimStart("https://")
+                </a>
+            </div>
+
+            <div class="py-1">
+                <span class="my-2 block font-medium text-gray-500">
+                    Owners
+                </span>
+
+                <div class="my-2">
+                    @foreach (var owner in _plugin.Owners)
+                    {
+                        <div class="flex mb-2">
+                            <img src="@($"https://www.nuget.org/profiles/" + owner + "/avatar?imageSize=40")" alt="" class="mr-2 w-10 h-10" />
+                            <span class="font-medium text-gray-900 whitespace-nowrap overflow-ellipsis overflow-hidden" style="transform: translate(0,20%);">
+                                @owner
+                            </span>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+
+    <div class="lg:col-span-3 order-first">
+        @if (_plugin != null && string.IsNullOrWhiteSpace(_markdown))
+        {
+            <p>
+                @if (!string.IsNullOrWhiteSpace(_plugin.Description))
+                {
+                    @_plugin.Description
+                }
+                else if (!string.IsNullOrWhiteSpace(_plugin.Summary))
+                {
+                    @_plugin.Summary
+                }
+                else
+                {
+                    @("Description was not provided.")
+                }
+            </p>
+        }
+        else
+        {
+            <Markdown Text=@_markdown />
+        }
+    </div>
+</div>
+
+@code
+{
+    private OpenMod.Plugins.Models.Plugin? _plugin;
+    private string? _markdown;
+
+    private string GetInstallCommand()
+        => string.Format("om install {0}@{1}", _plugin!.Id, _plugin!.Version);
+
+    private string GetNuGetPage()
+        => string.Format(@"https://nuget.org/packages/{0}/{1}", _plugin!.Id, _plugin!.Version);
+
+    protected override async Task OnInitializedAsync()
+    {
+        PageTitleState.Title = "Loading...";
+
+        await LoadPluginAsync();
+
+        if (_plugin == null)
+        {
+            PageTitleState.Title = "Plugin was not found";
+            return;
+        }
+
+        PageTitleState.Title = _plugin.Id;
+
+        await LoadMarkdownAsync();
+    }
+
+    private async Task LoadPluginAsync()
+    {
+        QueryParser.Plugin(null, out var id);
+
+        if (id == null)
+        {
+            // todo: display error message
+            NavigationManager.NavigateTo(UriBuilder.Index());
+            return;
+        }
+
+        _plugin = await PluginRepository.GetPluginAsync(id);
+    }
+
+    private async Task LoadMarkdownAsync()
+    {
+        if (_plugin == null)
+        {
+            return;
+        }
+
+        _markdown = await PluginRepository.GetMarkdownAsync(_plugin!);
+    }
+}

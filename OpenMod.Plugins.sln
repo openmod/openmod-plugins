@@ -7,7 +7,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{D3ABCB35-DD7
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenMod.Plugins", "src\OpenMod.Plugins\OpenMod.Plugins.csproj", "{F9CB6E28-5BC3-4599-98E9-8499FEEE0251}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenMod.BaGet.Protocol", "src\OpenMod.BaGet.Protocol\OpenMod.BaGet.Protocol.csproj", "{6F59B42E-4037-46B3-B392-97DE06B9EAC2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenMod.BaGet.Protocol", "src\OpenMod.BaGet.Protocol\OpenMod.BaGet.Protocol.csproj", "{6F59B42E-4037-46B3-B392-97DE06B9EAC2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

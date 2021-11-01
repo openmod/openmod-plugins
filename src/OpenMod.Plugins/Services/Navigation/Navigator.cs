@@ -37,4 +37,10 @@ public class Navigator : INavigator
 
         _navigationManager.NavigateTo(uri);
     }
+
+    public void Plugin(string id)
+    {
+        var uri = _uriBuilder.Plugin(id);
+        _navigationManager.NavigateTo(uri);
+    }
 }
