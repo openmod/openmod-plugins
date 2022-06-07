@@ -23,6 +23,13 @@ public class PluginRepository : IPluginRepository
         "TestingPlugin",
         "MyPlugin",
         "MyOpenModPlugin",
+        "plug1",
+        "NewPlugin",
+        "MyOpenModPlugin.testPlugin",
+        "Harry56.TestPlugin",
+        "58700",
+        "Mudastone.MyFirstPlugin",
+        "ApacheUnturned.MyFirstPlugin",
     };
 
     private static readonly string[] _ownerBlacklist =
