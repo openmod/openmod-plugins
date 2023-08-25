@@ -11,7 +11,7 @@ public class UriBuilder : IUriBuilder
 
     public string Search(int page, string query)
     {
-        var queries = new Dictionary<string, string>(capacity: 2);
+        var queries = new Dictionary<string, string?>(capacity: 2);
 
         if (page != 0)
         {
@@ -28,9 +28,7 @@ public class UriBuilder : IUriBuilder
 
     public string Plugin(string id)
     {
-        var queries = new Dictionary<string, string>(capacity: 1);
-
-        queries["id"] = id;
+        var queries = new Dictionary<string, string?>(capacity: 1) { ["id"] = id };
 
         return QueryHelpers.AddQueryString(uri: "plugin", queries);
     }

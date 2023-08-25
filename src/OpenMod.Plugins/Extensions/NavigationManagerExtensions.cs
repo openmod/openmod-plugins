@@ -23,21 +23,21 @@ public static class NavigationManagerExtensions
         var absoluteUri = navigationManager.ToAbsoluteUri(uri);
         var queries = QueryHelpers.ParseQuery(absoluteUri.Query);
 
-        if (queries.TryGetValue(key, out var query) && !string.IsNullOrEmpty(query))
+        if (!queries.TryGetValue(key, out var query) || string.IsNullOrEmpty(query))
         {
-            var converter = TypeDescriptor.GetConverter(type);
-            try
-            {
-                return converter.ConvertFrom((string)query);
-            }
-            catch (ArgumentException ex)
-            {
-                Console.Error.WriteLine(
-                    "Failed to convert a query parameter. Returning default value: " + ex.Message);
-                return null;
-            }
+            return null;
         }
 
-        return null;
+        var converter = TypeDescriptor.GetConverter(type);
+
+        try
+        {
+            return converter.ConvertFrom((string)query!);
+        }
+        catch (ArgumentException ex)
+        {
+            Console.Error.WriteLine("Failed to convert a query parameter. Returning default value: " + ex.Message);
+            return null;
+        }
     }
 }
