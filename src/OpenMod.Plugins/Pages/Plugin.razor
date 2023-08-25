@@ -20,8 +20,8 @@
     }
 }
 
-<div class="lg:grid lg:grid-cols-4 gap-x-8 lg:my-6">
-    <div class="lg:col-span-1 mb-10 sticky">
+<div class="lg:grid lg:grid-cols-12 gap-x-8 lg:my-6">
+    <div class="lg:col-span-4 sticky">
         @if (_plugin != null)
         {
             <div class="py-1">
@@ -48,7 +48,7 @@
                         Total downloads
                     </span>
                     <span class="my-2 block font-medium text-black whitespace-nowrap overflow-ellipsis overflow-hidden">
-                        @string.Format("{0:n0}", _plugin.TotalDownloads)
+                        @($"{_plugin.TotalDownloads:n0}")
                     </span>
                 </div>
             }
@@ -85,7 +85,7 @@
 
             <div class="py-1">
                 <span class="my-2 block font-medium text-gray-500">
-                    Owners
+                    Authors
                 </span>
 
                 <div class="my-2">
@@ -103,7 +103,7 @@
         }
     </div>
 
-    <div class="lg:col-span-3 order-first">
+    <div class="lg:col-span-8 order-first my-6 lg:my-0">
         @if (_pluginWasNotFound)
         {
             <p>Plugin was not found.</p>
@@ -124,7 +124,7 @@
             }
             else
             {
-                <p>Description was not provided.</p>
+                <p><i>Description was not provided.</i></p>
             }
         }
         else
@@ -142,10 +142,14 @@
     private bool _triedLoadingMarkdown;
 
     private string GetInstallCommand()
-        => string.Format("om install {0}@{1}", _plugin!.Id, _plugin!.Version);
+    {
+        return _plugin!.InstallCommand;
+    }
 
     private string GetNuGetPage()
-        => string.Format(@"https://nuget.org/packages/{0}/{1}", _plugin!.Id, _plugin!.Version);
+    {
+        return _plugin!.NuGetPage;
+    }
 
     protected override async Task OnInitializedAsync()
     {

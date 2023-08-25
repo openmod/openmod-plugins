@@ -23,7 +23,7 @@
                 @if (Plugin.TotalDownloads != null)
                 {
                     <span class="mx-1">·</span>
-                    <span>@string.Format("{0:n0} downloads", Plugin.TotalDownloads)</span>
+                    <span>@($"{Plugin.TotalDownloads:n0} downloads")</span>
                 }
             </div>
         </p>

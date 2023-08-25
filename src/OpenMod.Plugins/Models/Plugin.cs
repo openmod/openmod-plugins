@@ -24,16 +24,23 @@ public record Plugin(
     {
     }
 
-    public bool IsOfficial { get; }
-        = Id.StartsWith("OpenMod.", StringComparison.OrdinalIgnoreCase)
-          && Owners.Any(x => x == Id || x.Equals("OpenMod", StringComparison.OrdinalIgnoreCase));
+    public bool IsOfficial { get; } =
+        Id.StartsWith("OpenMod.", StringComparison.OrdinalIgnoreCase)
+        && Owners.Any(x => x == Id || x.Equals("OpenMod", StringComparison.OrdinalIgnoreCase));
 
-    public string CommandInstall { get; } = "openmod install " + Id;
+    public string InstallCommand { get; } = $"om install {Id}@{Version}";
 
-    public string NuGetUrl { get; } = "https://www.nuget.org/packages/" + Id;
+    public string NuGetPage { get; } = $"https://nuget.org/packages/{Id}/{Version}";
 
     private static string FixDescription(string description)
     {
-        return description.Trim() == "Package Description" ? "" : description;
+        var trimmedDescription = description
+            .AsSpan()
+            .Trim();
+
+        return trimmedDescription.SequenceEqual("Package Description") ||
+               trimmedDescription.SequenceEqual("Your plugin description")
+            ? ""
+            : description;
     }
 }
