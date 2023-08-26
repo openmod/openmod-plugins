@@ -29,7 +29,7 @@ jobs:
         working-directory: src/OpenMod.Plugins
 
       - name: Publish with dotnet
-        run: dotnet publish --configuration Release --output release
+        run: dotnet publish src/OpenMod.Plugins/ --configuration Release --output release
 
       # Change the base tag and segments count to match GitHub Pages repository subdirectory
       - name: Configure
