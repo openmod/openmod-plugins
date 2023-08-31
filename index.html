@@ -2,119 +2,150 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="description" content="Official list of OpenMod plugins." />
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
-    <title>OpenMod Plugins List</title>
-    <base href="/openmod-plugins/"/>
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet"/>
-    <link href="_content/MudBlazor/MudBlazor.min.css" rel="stylesheet"/>
-    <link href="css/app.css" rel="stylesheet"/>
-    <link href="OpenMod.Plugins.styles.css" rel="stylesheet"/>
+    <title>OpenMod</title>
+    <base href="/openmod-plugins/" />
+    <link href="css/app.min.css" rel="stylesheet" />
+    <!-- <link href="OpenMod.Plugins.styles.css" rel="stylesheet"/> -->
 </head>
 
 <body>
-<div id="app">
-    <style>
-        html,
-        body {
-            height: 100%;
-            margin: 0;
-        }
-
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            text-align: center;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: #f5f5f5;
-        }
-
-        svg {
-            width: 120px;
-            height: auto;
-        }
-    </style>
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="25 25 50 50">
-        <circle cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke="#594ae2" stroke-linecap="round"
-                stroke-dashoffset="0" stroke-dasharray="100, 200">
-            <animateTransform attributeName="transform" attributeType="XML" type="rotate" from="0 50 50" to="360 50 50"
-                              dur="2.5s" repeatCount="indefinite"/>
-            <animate attributeName="stroke-dashoffset" values="0;-30;-124" dur="1.25s" repeatCount="indefinite"/>
-            <animate attributeName="stroke-dasharray" values="0,200;110,200;110,200" dur="1.25s"
-                     repeatCount="indefinite"/>
-        </circle>
-    </svg>
-</div>
-
-<!-- Start Single Page Apps for GitHub Pages -->
-<script type="text/javascript">
-    // Single Page Apps for GitHub Pages
-    // https://github.com/rafrex/spa-github-pages
-    // Copyright (c) 2016 Rafael Pedicini, licensed under the MIT License
-    // ----------------------------------------------------------------------
-    // This script checks to see if a redirect is present in the query string
-    // and converts it back into the correct url and adds it to the
-    // browser's history using window.history.replaceState(...),
-    // which won't cause the browser to attempt to load the new url.
-    // When the single page app is loaded further down in this file,
-    // the correct url will be waiting in the browser's history for
-    // the single page app to route accordingly.
-    (function (l) {
-        if (l.search) {
-            var q = {};
-            l.search.slice(1).split('&').forEach(function (v) {
-                var a = v.split('=');
-                q[a[0]] = a.slice(1).join('=').replace(/~and~/g, '&');
-            });
-            if (q.p !== undefined) {
-                window.history.replaceState(null, null,
-                    l.pathname.slice(0, -1) + (q.p || '') +
-                    (q.q ? ('?' + q.q) : '') +
-                    l.hash
-                );
+    <div id="app">
+        <style>
+            .loader {
+                color: #000000;
+                text-indent: -9999em;
+                margin: 88px auto;
+                position: relative;
+                font-size: 11px;
+                -webkit-transform: translateZ(0);
+                -ms-transform: translateZ(0);
+                transform: translateZ(0);
+                -webkit-animation-delay: -0.16s;
+                animation-delay: -0.16s;
             }
-        }
-    }(window.location))
-</script>
-<!-- End Single Page Apps for GitHub Pages -->
 
-<script src="_content/MudBlazor/MudBlazor.min.js"></script>
+                .loader,
+                .loader:before,
+                .loader:after {
+                    background: #000000;
+                    -webkit-animation: load1 1s infinite ease-in-out;
+                    animation: load1 1s infinite ease-in-out;
+                    width: 1em;
+                    height: 4em;
+                }
 
-<div id="blazor-error-ui">
-    An unhandled error has occurred.
-    <a href="" class="reload">Reload</a>
-    <a class="dismiss">🗙</a>
-</div>
-
-<!-- https://docs.microsoft.com/en-us/aspnet/core/blazor/host-and-deploy/webassembly?view=aspnetcore-5.0#compression -->
-<script src="js/decode.js"></script>
-<script src="_framework/blazor.webassembly.js" autostart="false"></script>
-<script>
-    Blazor.start({
-        loadBootResource: function (type, name, defaultUri, integrity) {
-            if (type !== 'dotnetjs' && location.hostname !== 'localhost') {
-                return (async function () {
-                    const response = await fetch(defaultUri + '.br', {cache: 'no-cache'});
-                    if (!response.ok) {
-                        throw new Error(response.statusText);
+                    .loader:before, .loader:after {
+                        position: absolute;
+                        top: 0;
+                        content: '';
                     }
-                    const originalResponseBuffer = await response.arrayBuffer();
-                    const originalResponseArray = new Int8Array(originalResponseBuffer);
-                    const decompressedResponseArray = BrotliDecode(originalResponseArray);
-                    const contentType = type ===
-                    'dotnetwasm' ? 'application/wasm' : 'application/octet-stream';
-                    return new Response(decompressedResponseArray,
-                        {headers: {'content-type': contentType}});
-                })();
+
+                    .loader:before {
+                        left: -1.5em;
+                        -webkit-animation-delay: -0.32s;
+                        animation-delay: -0.32s;
+                    }
+
+                    .loader:after {
+                        left: 1.5em;
+                    }
+
+            @-webkit-keyframes load1 {
+                0%, 80%, 100% {
+                    box-shadow: 0 0;
+                    height: 4em;
+                }
+
+                40% {
+                    box-shadow: 0 -2em;
+                    height: 5em;
+                }
             }
-        }
-    });
-</script>
+
+            @keyframes load1 {
+                0%, 80%, 100% {
+                    box-shadow: 0 0;
+                    height: 4em;
+                }
+
+                40% {
+                    box-shadow: 0 -2em;
+                    height: 5em;
+                }
+            }
+        </style>
+
+        <div class="loader">
+            Loading...
+        </div>
+    </div>
+
+    <!-- Start Single Page Apps for GitHub Pages -->
+    <script type="text/javascript">
+        // Single Page Apps for GitHub Pages
+        // https://github.com/rafrex/spa-github-pages
+        // Copyright (c) 2016 Rafael Pedicini, licensed under the MIT License
+        // ----------------------------------------------------------------------
+        // This script checks to see if a redirect is present in the query string
+        // and converts it back into the correct url and adds it to the
+        // browser's history using window.history.replaceState(...),
+        // which won't cause the browser to attempt to load the new url.
+        // When the single page app is loaded further down in this file,
+        // the correct url will be waiting in the browser's history for
+        // the single page app to route accordingly.
+        (function (l) {
+            if (l.search) {
+                var q = {};
+                l.search.slice(1).split('&').forEach(function (v) {
+                    var a = v.split('=');
+                    q[a[0]] = a.slice(1).join('=').replace(/~and~/g, '&');
+                });
+                if (q.p !== undefined) {
+                    window.history.replaceState(null, null,
+                        l.pathname.slice(0, -1) + (q.p || '') +
+                        (q.q ? ('?' + q.q) : '') +
+                        l.hash
+                    );
+                }
+            }
+        }(window.location))
+    </script>
+    <!-- End Single Page Apps for GitHub Pages -->
+
+    <div id="blazor-error-ui">
+        An unhandled error has occurred.
+        <a href="" class="reload">Reload</a>
+        <a class="dismiss">🗙</a>
+    </div>
+
+    <!-- https://docs.microsoft.com/en-us/aspnet/core/blazor/host-and-deploy/webassembly?view=aspnetcore-5.0#compression -->
+    <script src="js/decode.js"></script>
+    <script src="_framework/blazor.webassembly.js" autostart="false"></script>
+    <script>
+        Blazor.start({
+            loadBootResource: function (type, name, defaultUri, integrity) {
+                if (type !== 'dotnetjs' && location.hostname !== 'localhost') {
+                    return (async function () {
+                        const response = await fetch(defaultUri + '.br', { cache: 'no-cache' });
+                        if (!response.ok) {
+                            throw new Error(response.statusText);
+                        }
+                        const originalResponseBuffer = await response.arrayBuffer();
+                        const originalResponseArray = new Int8Array(originalResponseBuffer);
+                        const decompressedResponseArray = BrotliDecode(originalResponseArray);
+                        const contentType = type ===
+                            'dotnetwasm' ? 'application/wasm' : 'application/octet-stream';
+                        return new Response(decompressedResponseArray,
+                            { headers: { 'content-type': contentType } });
+                    })();
+                }
+            }
+        });
+    </script>
 </body>
 
 </html>
